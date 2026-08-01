@@ -115,6 +115,23 @@ const useThreeScene = (canvasRef, geometry, glow, isMobile) => {
       addPart(new THREE.TorusGeometry(0.54, 0.04, 8, 24), 1, [0, -0.4, 0], [Math.PI/2, 0, 0])
     } else if (geometry === 'box') {
       addPart(new THREE.BoxGeometry(1.5, 1.5, 1.5))
+    } else if (geometry === 'otter') {
+      // Body
+      addPart(new THREE.CylinderGeometry(0.35, 0.35, 1.2, 32), 1, [0, -0.1, 0], [0, 0, Math.PI/2])
+      // Head
+      addPart(new THREE.SphereGeometry(0.35, 32, 32), 1, [0.7, 0.1, 0])
+      // Ears
+      addPart(new THREE.SphereGeometry(0.1, 16, 16), 1, [0.75, 0.35, 0.2])
+      addPart(new THREE.SphereGeometry(0.1, 16, 16), 1, [0.75, 0.35, -0.2])
+      // Snout
+      addPart(new THREE.SphereGeometry(0.15, 16, 16), 1, [1.0, 0.05, 0])
+      // Tail
+      addPart(new THREE.CylinderGeometry(0.15, 0.02, 0.8, 16), 1, [-0.8, -0.2, 0], [0, 0, -Math.PI/2.5])
+      // Paws
+      addPart(new THREE.CylinderGeometry(0.08, 0.08, 0.3, 16), 1, [0.4, -0.3, 0.25], [Math.PI/4, 0, 0])
+      addPart(new THREE.CylinderGeometry(0.08, 0.08, 0.3, 16), 1, [0.4, -0.3, -0.25], [-Math.PI/4, 0, 0])
+      addPart(new THREE.CylinderGeometry(0.08, 0.08, 0.3, 16), 1, [-0.4, -0.3, 0.25], [Math.PI/4, 0, 0])
+      addPart(new THREE.CylinderGeometry(0.08, 0.08, 0.3, 16), 1, [-0.4, -0.3, -0.25], [-Math.PI/4, 0, 0])
     } else if (geometry === 'sphere') {
       addPart(new THREE.SphereGeometry(1.3, 32, 32))
     } else if (geometry === 'torus') {

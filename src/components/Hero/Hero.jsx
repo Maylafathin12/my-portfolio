@@ -181,7 +181,7 @@ const Hero = () => {
         <div ref={leftInfoRef} className="hero-left-info">
           <div className="hero-stat">
             <p className="hero-stat-label">{th.projectExp}</p>
-            <p className="hero-stat-num">3+</p>
+            <p className="hero-stat-num">2+</p>
             <p className="hero-stat-sub">{th.yearsBuilding}</p>
           </div>
           <div className="hero-divider-v" />
@@ -234,7 +234,6 @@ const Hero = () => {
           {[
             { label: th.coreStack, value: 'React · Vite · TypeScript' },
             { label: th.creative3D, value: 'Three.js · GSAP · Framer-Motion' },
-            { label: th.mobile, value: 'Flutter · Kotlin' },
             { label: th.designTools, value: 'Figma · UI/UX' },
             { label: th.readyToShip, value: th.readyToShipSub },
           ].map((item, i) => (

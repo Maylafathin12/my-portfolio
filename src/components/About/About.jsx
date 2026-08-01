@@ -65,7 +65,7 @@ const About = () => {
         <p className="about-quote">
           {ta.quote}
         </p>
-        <p className="about-attribution">- Mayla, 2025</p>
+        <p className="about-attribution">- Mayla, 2026</p>
       </div>
 
       <style>{`
