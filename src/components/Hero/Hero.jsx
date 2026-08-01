@@ -193,7 +193,7 @@ const Hero = () => {
           <div className="hero-divider-v" />
           <div className="hero-stat">
             <p className="hero-stat-label">{th.basedIn}</p>
-            <p className="hero-stat-loc">Yogyakarta</p>
+            <p className="hero-stat-loc">{th.city}</p>
             <p className="hero-stat-sub">{th.indonesia}</p>
           </div>
         </div>
