@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useLanguage } from '../../context/LanguageContext'
+import { useAboutUnlock, LOCKED_SECTION_IDS } from '../../context/AboutUnlockContext'
 
 const ConstellationNav = ({ activeSection }) => {
   const { t } = useLanguage()
+  const { isUnlocked, requestShake } = useAboutUnlock()
   const sections = t('nav')
   const [hovered, setHovered] = useState(null)
   const dotRefs = useRef([])
@@ -11,6 +13,13 @@ const ConstellationNav = ({ activeSection }) => {
   const lineRef = useRef(null)
 
   const scrollToSection = (id) => {
+    if (!isUnlocked && LOCKED_SECTION_IDS.includes(id)) {
+      requestShake()
+      const aboutEl = document.getElementById('about')
+      if (aboutEl) aboutEl.scrollIntoView({ behavior: 'smooth' })
+      return
+    }
+
     const el = document.getElementById(id)
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }

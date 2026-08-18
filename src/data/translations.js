@@ -41,7 +41,130 @@ export const translations = {
         { text: 'AN', highlight: false },
         { text: 'ENGINEER.', highlight: true },
       ],
-      quote: "\"I care about the gap between how something looks and how it actually feels to use — that gap is where I live, and I close it with code.\""
+      quote: "\"I care about the gap between how something looks and how it actually feels to use — that gap is where I live, and I close it with code.\"",
+      buttonUnlock: "More About Me",
+      buttonLocked: "Keep Scrolling ↓"
+    },
+    moreAbout: {
+      eyebrow: "✦ Behind the Screens",
+      title: "My Daily",
+      titleHighlight: "Driver",
+      frequency: {
+        eyebrow: "PERSONAL BROADCAST",
+        titleLine1: "You're not reading",
+        titleLine2: "a tool list.",
+        titleEm: "You're tuning into a frequency.",
+        subtitle: "Five signals. One person. Scroll to decode who I am beyond the resume.",
+        tuning: "Scanning frequencies…",
+        locked: "SIGNAL LOCKED — MAYLA.FREQ",
+        scrollHint: "Scroll to decode",
+        terminalHint: "Dev easter egg: ⌘K",
+        chapters: {
+          desk: {
+            num: "01",
+            label: "Workstation",
+            title: "Where ideas",
+            titleEm: "become pixels.",
+            story: "Starlight MacBook at 2 AM. Silent mouse clicks. Sade on loop. This desk isn't just hardware — it's the cockpit where I ship products in one-third the usual time."
+          },
+          craft: {
+            num: "02",
+            label: "Craft Stack",
+            title: "Tools I",
+            titleEm: "think in.",
+            story: "I don't collect IDEs — I orchestrate them. Cursor for AI pair-programming, VS Code for precision, Antigravity when the problem needs an agent."
+          },
+          neural: {
+            num: "03",
+            label: "Neural Layer",
+            title: "AI as",
+            titleEm: "creative amplifier.",
+            story: "Four models, one workflow. ChatGPT for brainstorming, Claude for deep reviews, Copilot for flow state, Gemini for multimodal context."
+          },
+          soul: {
+            num: "04",
+            label: "Off-Circuit",
+            title: "What fuels",
+            titleEm: "the engineer.",
+            story: "F1 telemetry on Sunday. Niche perfume before standup. Lana Del Rey while refactoring. The human behind the commits."
+          },
+          outro: {
+            num: "05",
+            label: "Signal Out",
+            title: "Ready to",
+            titleEm: "collaborate?",
+            story: "If you scrolled this far, you already know the craft and energy I bring. Let's build something extraordinary together."
+          }
+        },
+        hrNote: "Hey HR — yes, I actually built this page myself. Every animation, every interaction. That's the kind of frontend engineer you're looking at.",
+        backHome: "← Back to Portfolio"
+      },
+      hardware: {
+        title: "Hardware",
+        items: [
+          { name: "Laptop", value: "Macbook Air M4 (Starlight)" },
+          { name: "Mouse", value: "Logitech Pebble 2 M350s (White)" },
+          { name: "Headphone", value: "Sony WH-CH520 (Beige)" }
+        ]
+      },
+      craftTabs: {
+        code: "Code & IDE",
+        design: "Design & Creative"
+      },
+      software: {
+        title: "Software & Stack",
+        codeItems: [
+          { name: "Cursor", value: "AI-Powered Coding" },
+          { name: "Visual Studio Code", value: "Primary Editor" },
+          { name: "Antigravity", value: "Advanced Agentic IDE" }
+        ],
+        designItems: [
+          { name: "Figma", value: "UI/UX & Design Systems" },
+          { name: "Framer", value: "Interactive Prototyping" },
+          { name: "Pinterest", value: "Visual Moodboards & Curation" }
+        ]
+      },
+      ai: {
+        title: "AI Tools & Subscriptions",
+        items: [
+          { name: "ChatGPT Plus", value: "Daily Assistant" },
+          { name: "Claude Pro", value: "Deep Analysis" },
+          { name: "GitHub Copilot", value: "Code Autocomplete" },
+          { name: "Gemini Pro", value: "Multimodal Intelligence" }
+        ]
+      },
+      life: {
+        title: "Life Beyond Code",
+        f1: {
+          tag: "FORMULA 1 • GEORGE RUSSELL 63",
+          title: "F1 & George Russell Fanatic",
+          desc: "Addicted to F1, tracking every lap, race strategy, and podium finish 🏎️",
+          bgImage: "russell.jpg"
+        },
+        music: {
+          title: "Audio & Music Streams",
+          desc: "Daily playlists and streaming rotation on Spotify & MYRADIO",
+          platforms: [
+            { name: "Spotify", link: "https://open.spotify.com/playlist/37eVMnGXgPw9K88EmuBjV0?si=UftT4SNSRpSJUy3wMqP8QQ", desc: "Daily Playlists & Tunes 🎵" },
+            { name: "MYRADIO", link: "https://myradio-by-mypitlane.vercel.app/", desc: "MYRADIO by MyPitlane 📻" }
+          ],
+          artistsLabel: "Addicted Artists & Heavy Rotation",
+          artists: ["SADE", "ENYA", "Lana Del Rey"]
+        },
+        perfume: {
+          title: "Perfume Addiction",
+          desc: "Obsessed with signature scents & local/niche fragrance brands ✨",
+          items: [
+            { brand: "HMNS", variant: "UNTITLED VOL 2", bgImage: "untitled.jpg" },
+            { brand: "BELLISIMA BORSA", variant: "SPLENDORE", bgImage: "splendore.jpeg" },
+            { brand: "LASAINS", variant: "DONNA COSTOSA", bgImage: "donna.jpeg" }
+          ]
+        },
+        socials: {
+          instagram: { name: "Instagram", value: "@mamaaamiaw", link: "https://instagram.com/mamaaamiaw" },
+          youtube: { name: "YouTube Fav", value: "Tech Reviewers & Coding Tutorials" }
+        }
+      }
     },
     projects: {
       selectedWorks: "✦ Selected Works",
@@ -289,7 +412,121 @@ export const translations = {
         { text: 'SEORANG', highlight: false },
         { text: 'ENGINEER.', highlight: true },
       ],
-      quote: "\"Saya peduli pada jarak antara bagaimana sesuatu terlihat dan bagaimana rasanya saat digunakan — di ruang itulah saya bekerja, dan saya menjembataninya melalui barisan kode.\""
+      quote: "\"Saya peduli pada jarak antara bagaimana sesuatu terlihat dan bagaimana rasanya saat digunakan — di ruang itulah saya bekerja, dan saya menjembataninya melalui barisan kode.\"",
+      buttonUnlock: "Lebih Lanjut Tentang Saya",
+      buttonLocked: "Terus Gulir ↓"
+    },
+    moreAbout: {
+      eyebrow: "✦ Di Balik Layar",
+      title: "Alat",
+      titleHighlight: "Andalan",
+      frequency: {
+        eyebrow: "SIARAN PRIBADI",
+        titleLine1: "Ini bukan daftar",
+        titleLine2: "alat biasa.",
+        titleEm: "Kamu sedang menyetel frekuensiku.",
+        subtitle: "Lima sinyal. Satu orang. Gulir untuk decode siapa aku di balik resume.",
+        tuning: "Memindai frekuensi…",
+        locked: "SINYAL TERKUNCI — MAYLA.FREQ",
+        scrollHint: "Gulir untuk decode",
+        terminalHint: "Easter egg dev: ⌘K",
+        chapters: {
+          desk: {
+            num: "01",
+            label: "Workstation",
+            title: "Tempat ide",
+            titleEm: "jadi pixel.",
+            story: "MacBook Starlight jam 2 pagi. Klik mouse senyap. Sade di loop. Meja ini bukan cuma hardware — ini cockpit tempat aku ship produk 3× lebih cepat."
+          },
+          craft: {
+            num: "02",
+            label: "Craft Stack",
+            title: "Alat yang jadi",
+            titleEm: "bahasa pikiranku.",
+            story: "Bukan koleksi IDE — tapi orkestrasi. Cursor buat AI pair-programming, VS Code buat presisi, Antigravity kalau masalahnya butuh agent."
+          },
+          neural: {
+            num: "03",
+            label: "Neural Layer",
+            title: "AI sebagai",
+            titleEm: "amplifier kreatif.",
+            story: "Empat model, satu workflow. ChatGPT buat brainstorming, Claude buat deep review, Copilot buat flow state, Gemini buat konteks multimodal."
+          },
+          soul: {
+            num: "04",
+            label: "Off-Circuit",
+            title: "Yang mengisi",
+            titleEm: "bahan bakar engineer.",
+            story: "Telemetri F1 di Minggu. Parfum niche sebelum standup. Lana Del Rey sambil refactor. Manusia di balik setiap commit."
+          },
+          outro: {
+            num: "05",
+            label: "Signal Out",
+            title: "Siap untuk",
+            titleEm: "kolaborasi?",
+            story: "Kalau kamu scroll sampai sini, kamu sudah kenal passion dan standar craft yang aku bawa. Yuk kita wujudkan hal luar biasa bareng."
+          }
+        },
+        hrNote: "Halo HR — ya, halaman ini memang aku yang buat sendiri. Setiap animasi, setiap interaksi. Itu tipe frontend engineer yang lagi kamu lihat.",
+        backHome: "← Kembali ke Portfolio"
+      },
+      hardware: {
+        title: "Perangkat Keras",
+        items: [
+          { name: "Laptop", value: "Macbook Air M4 (Starlight)" },
+          { name: "Mouse", value: "Logitech Pebble 2 M350s (White)" },
+          { name: "Headphone", value: "Sony WH-CH520 (Beige)" }
+        ]
+      },
+      software: {
+        title: "Perangkat Lunak & IDE",
+        items: [
+          { name: "Cursor", value: "Coding Berbasis AI" },
+          { name: "Visual Studio Code", value: "Editor Utama" },
+          { name: "Antigravity", value: "Advanced Agentic IDE" }
+        ]
+      },
+      ai: {
+        title: "AI Tools & Langganan",
+        items: [
+          { name: "ChatGPT Plus", value: "Asisten Harian" },
+          { name: "Claude Pro", value: "Analisis Mendalam" },
+          { name: "GitHub Copilot", value: "Autocomplete Kode" },
+          { name: "Gemini Pro", value: "Kecerdasan Multimodal" }
+        ]
+      },
+      life: {
+        title: "Kehidupan di Luar Kode",
+        f1: {
+          tag: "FORMULA 1 • GEORGE RUSSELL 63",
+          title: "F1 & George Russell Fanatic",
+          desc: "Penggemar berat F1, pantau setiap balapan, strategi pit stop, dan aksi George Russell 63 🏎️",
+          bgImage: "russell.jpg"
+        },
+        music: {
+          title: "Streaming Musik & Radio",
+          desc: "Selalu dengerin lagu-lagu hits dan playlist favorit di Spotify & MYRADIO",
+          platforms: [
+            { name: "Spotify", link: "https://open.spotify.com/playlist/37eVMnGXgPw9K88EmuBjV0?si=UftT4SNSRpSJUy3wMqP8QQ", desc: "Playlist Harian 🎵" },
+            { name: "MYRADIO", link: "https://myradio-by-mypitlane.vercel.app/", desc: "MYRADIO by MyPitlane 📻" }
+          ],
+          artistsLabel: "Addicted Song & Artis Favorit",
+          artists: ["SADE", "ENYA", "Lana Del Rey"]
+        },
+        perfume: {
+          title: "Kecanduan Parfume",
+          desc: "Lagi addicted banget sama racikan aroma dari brand wewangian ini ✨",
+          items: [
+            { brand: "HMNS", variant: "UNTITLED VOL 2", bgImage: "untitled.jpg" },
+            { brand: "BELLISIMA BORSA", variant: "SPLENDORE", bgImage: "splendore.jpeg" },
+            { brand: "LASAINS", variant: "DONNA COSTOSA", bgImage: "donna.jpeg" }
+          ]
+        },
+        socials: {
+          instagram: { name: "Instagram", value: "@mamaaamiaw", link: "https://instagram.com/mamaaamiaw" },
+          youtube: { name: "YouTube Fav", value: "Review Tech & Tutorial Coding" }
+        }
+      }
     },
     projects: {
       selectedWorks: "✦ Karya Pilihan",

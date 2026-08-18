@@ -15,12 +15,18 @@ ScrollTrigger.config({
 })
 
 import { LanguageProvider } from './context/LanguageContext'
+import { AudioProvider } from './context/AudioContext'
+import { AboutUnlockProvider } from './context/AboutUnlockContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <LanguageProvider>
-        <App />
+        <AudioProvider>
+          <AboutUnlockProvider>
+            <App />
+          </AboutUnlockProvider>
+        </AudioProvider>
       </LanguageProvider>
     </BrowserRouter>
   </StrictMode>,

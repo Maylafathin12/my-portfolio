@@ -1,0 +1,2272 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap');
+
+/* ═══════════════════════════════════════════════════════════
+   MAYLA.FREQ — DHUAR EDITION
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+.freq-page {
+  position: relative;
+  min-height: 100vh;
+  background: #0a0812;
+  color: #fff;
+  overflow-x: hidden;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Background ── */
+.freq-particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.5; }
+.freq-spotlight {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(550px circle at var(--mx,50%) var(--my,50%), rgba(232,200,255,0.045), transparent 70%);
+}
+
+/* ══════════════════════════════════════════════════════════
+   CURSOR TRAIL
+══════════════════════════════════════════════════════════ */
+.cursor-trail-dot {
+  position: fixed; top: 0; left: 0; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,200,255,0.9), rgba(176,111,255,0.4));
+  pointer-events: none; z-index: 9998; will-change: transform; mix-blend-mode: screen;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CHAPTER RAIL
+══════════════════════════════════════════════════════════ */
+.freq-rail {
+  position: fixed; left: clamp(1rem,2.5vw,1.6rem); top: 50%; transform: translateY(-50%);
+  z-index: 100; display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start;
+}
+.freq-rail-dot { position: relative; display: flex; align-items: center; background: none; border: none; cursor: pointer; padding: 0.3rem; }
+.freq-rail-pip { display: block; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(232,200,255,0.22); background: transparent; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); flex-shrink: 0; }
+.freq-rail-dot.active .freq-rail-pip, .freq-rail-dot:hover .freq-rail-pip { background: #e8c8ff; border-color: #e8c8ff; box-shadow: 0 0 14px rgba(232,200,255,0.75); transform: scale(1.35); }
+.freq-rail-tooltip { position: absolute; left: calc(100% + 14px); top: 50%; transform: translateY(-50%); background: rgba(13,10,20,0.96); border: 1px solid rgba(232,200,255,0.1); border-radius: 8px; padding: 0.45rem 0.85rem; display: flex; flex-direction: column; gap: 0.05rem; white-space: nowrap; backdrop-filter: blur(16px); pointer-events: none; animation: tooltipSlide 0.18s ease; }
+@keyframes tooltipSlide { from { opacity:0; transform:translateY(-50%) translateX(-8px); } to { opacity:1; transform:translateY(-50%) translateX(0); } }
+.freq-rail-tooltip-num { font-family:'Fira Code',monospace; font-size:9px; color:rgba(232,200,255,0.38); letter-spacing:0.22em; }
+.freq-rail-tooltip-label { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:700; color:rgba(255,255,255,0.88); letter-spacing:0.1em; text-transform:uppercase; }
+
+/* ══════════════════════════════════════════════════════════
+   INTRO — BIOS BOOT SCREEN
+══════════════════════════════════════════════════════════ */
+.bios-intro {
+  position: relative; height: 100vh; min-height: 600px;
+  display: flex; flex-direction: column; z-index: 2;
+  background: #060410;
+}
+
+.bios-scanlines {
+  position: absolute; inset: 0; pointer-events: none; z-index: 10;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.08) 3px,
+    rgba(0,0,0,0.08) 4px
+  );
+}
+
+.freq-intro-content-boot {
+  flex: 1; display: flex; flex-direction: column;
+  padding: clamp(4vh,6vh,8vh) clamp(5vw,8vw,10vw);
+  justify-content: center;
+  position: relative; z-index: 2;
+}
+
+.bios-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(232,200,255,0.08);
+}
+
+.bios-logo {
+  font-family: 'Fira Code', monospace;
+  font-size: clamp(14px, 1.8vw, 20px);
+  font-weight: 700;
+  color: rgba(232,200,255,0.9);
+  letter-spacing: 0.15em;
+}
+
+.bios-version {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(232,200,255,0.3);
+  letter-spacing: 0.25em;
+}
+
+.bios-terminal {
+  font-family: 'Fira Code', monospace;
+  font-size: clamp(10px, 1.1vw, 13px);
+  line-height: 1.85;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.bios-line { min-height: 1.85em; }
+.bios-white  { color: rgba(255,255,255,0.9); }
+.bios-dim    { color: rgba(232,200,255,0.35); letter-spacing: 0.06em; }
+.bios-green  { color: #7fff9a; }
+.bios-purple { color: #c17dff; }
+.bios-yellow { color: #ffb347; }
+.bios-bright { color: #fff; font-weight: 700; letter-spacing: 0.08em; }
+.bios-default { color: rgba(255,255,255,0.7); }
+
+.bios-cursor {
+  display: inline-block;
+  color: rgba(232,200,255,0.8);
+  animation: biosCursorBlink 0.6s step-end infinite;
+}
+@keyframes biosCursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.bios-boot-complete {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  animation: biosBootFadeIn 0.5s ease;
+}
+@keyframes biosBootFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.bios-boot-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 11px;
+  color: rgba(232,200,255,0.5);
+  letter-spacing: 0.12em;
+}
+
+.bios-boot-bar {
+  width: 200px; height: 4px;
+  background: rgba(232,200,255,0.08);
+  border-radius: 100px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.bios-boot-fill {
+  height: 100%;
+  background: linear-gradient(to right, #b06fff, #e8c8ff);
+  border-radius: 100px;
+  animation: biosBarFill 2.5s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes biosBarFill { from { width:0%; } to { width:100%; } }
+
+.bios-press-any {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(232,200,255,0.35);
+  letter-spacing: 0.2em;
+  animation: biosPressBlink 1.4s ease-in-out infinite;
+}
+@keyframes biosPressBlink { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
+
+.freq-scroll-cue {
+  position: absolute; bottom: clamp(1.5rem,3vh,2.5rem); left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+  font-family: 'Fira Code', monospace; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(232,200,255,0.3); z-index: 3; animation: scrollCueBounce 2.5s ease-in-out infinite;
+}
+@keyframes scrollCueBounce { 0%,100%{transform:translateX(-50%) translateY(0);opacity:0.4;} 50%{transform:translateX(-50%) translateY(5px);opacity:0.8;} }
+.freq-scroll-icon { color: rgba(232,200,255,0.35); }
+
+/* ══════════════════════════════════════════════════════════
+   CHAPTER COMMON
+══════════════════════════════════════════════════════════ */
+.freq-chapter {
+  position: relative; min-height: 100vh; z-index: 2;
+  display: flex; align-items: center;
+  padding: clamp(6vh,9vh,11vh) clamp(5vw,8vw,10vw);
+}
+.freq-chapter-inner {
+  width: 100%; max-width: 1240px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: clamp(2.5rem,5vh,4rem);
+}
+.freq-chapter-header { display: flex; flex-direction: column; gap: 0.8rem; max-width: 640px; }
+.freq-ch-num { font-family:'Fira Code',monospace; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:rgba(232,200,255,0.3); display:flex; align-items:center; gap:0.2em; }
+.freq-cursor-blink { display:inline-block; color:rgba(176,111,255,0.7); animation:blinkCursor 1s step-end infinite; margin-left:1px; }
+@keyframes blinkCursor { 0%,100%{opacity:1;} 50%{opacity:0;} }
+.freq-ch-title { font-family:'Clash Display','DM Sans',sans-serif; font-size:clamp(34px,4.2vw,64px); font-weight:700; line-height:1.08; letter-spacing:-0.022em; color:rgba(255,255,255,0.92); margin:0; }
+.freq-ch-title em { color:transparent; background:linear-gradient(135deg,#e8c8ff 0%,#b06fff 50%,#f9b8d4 100%); -webkit-background-clip:text; background-clip:text; font-style:italic; }
+.freq-ch-story { font-family:'DM Sans',sans-serif; font-size:clamp(13px,1.1vw,15px); color:rgba(255,255,255,0.42); line-height:1.7; margin:0; max-width:520px; }
+
+/* ══════════════════════════════════════════════════════════
+   01: WORKSTATION — HOLOGRAPHIC BENTO (unchanged)
+══════════════════════════════════════════════════════════ */
+.freq-desk { background:#0a0812; }
+.bento-grid { display:grid; grid-template-columns:1.5fr 1fr; grid-template-rows:auto auto; gap:1rem; max-width:900px; }
+.bento-center { grid-row:span 2; }
+.bento-left   { grid-column:2; grid-row:1; }
+.bento-right  { grid-column:2; grid-row:2; }
+
+.bento-card { border-radius:20px; cursor:default; perspective:900px; }
+.bento-inner {
+  position:relative; border-radius:20px; padding:clamp(1.2rem,2.5vw,2rem);
+  background:linear-gradient(145deg,rgba(var(--accent-rgb),0.05) 0%,rgba(10,8,18,0.7) 60%,rgba(var(--accent-rgb),0.03) 100%);
+  border:1px solid rgba(var(--accent-rgb),0.14);
+  transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transition:transform 0.12s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  overflow:hidden; display:flex; flex-direction:column; gap:1rem; height:100%; will-change:transform;
+}
+.bento-card:hover .bento-inner { border-color:rgba(var(--accent-rgb),0.3); box-shadow:0 20px 60px -15px rgba(var(--accent-rgb),0.25),inset 0 0 40px rgba(var(--accent-rgb),0.03); }
+.bento-glow { position:absolute; inset:0; border-radius:20px; background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(var(--accent-rgb),0.08),transparent 70%); pointer-events:none; opacity:0; transition:opacity 0.35s; }
+.bento-card:hover .bento-glow { opacity:1; }
+.bento-dot-grid { position:absolute; inset:0; border-radius:20px; background-image:radial-gradient(circle,rgba(var(--accent-rgb),0.06) 1px,transparent 1px); background-size:24px 24px; pointer-events:none; opacity:0.7; }
+.bento-chip { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:100px; border:1px solid rgba(var(--accent-rgb),0.2); background:rgba(var(--accent-rgb),0.06); font-family:'Fira Code',monospace; font-size:8px; letter-spacing:0.22em; color:rgba(var(--accent-rgb),0.85); width:fit-content; position:relative; z-index:1; }
+.bento-chip-dot { width:5px; height:5px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent); animation:chipPulse 2s ease-in-out infinite; }
+@keyframes chipPulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(0.8);} }
+.bento-img-wrap { flex:1; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:12px; background:rgba(0,0,0,0.3); position:relative; z-index:1; min-height:120px; }
+.bento-img { width:100%; height:100%; object-fit:cover; border-radius:12px; transition:transform 0.5s ease; display:block; }
+.bento-card:hover .bento-img { transform:scale(1.04); }
+.bento-info { display:flex; flex-direction:column; gap:0.3rem; position:relative; z-index:1; transform:translateY(4px); transition:transform 0.35s ease; }
+.bento-card:hover .bento-info { transform:translateY(0); }
+.bento-tag { font-family:'Fira Code',monospace; font-size:9px; letter-spacing:0.2em; color:rgba(var(--accent-rgb),0.55); text-transform:uppercase; }
+.bento-name { font-family:'DM Sans',sans-serif; font-size:clamp(14px,1.2vw,17px); font-weight:700; color:rgba(255,255,255,0.9); margin:0; letter-spacing:-0.01em; }
+.bento-specs { display:flex; flex-wrap:wrap; gap:4px; }
+.bento-specs span { font-family:'Fira Code',monospace; font-size:8px; letter-spacing:0.12em; padding:2px 7px; border-radius:4px; border:1px solid rgba(var(--accent-rgb),0.12); color:rgba(255,255,255,0.4); background:rgba(var(--accent-rgb),0.04); }
+
+/* ══════════════════════════════════════════════════════════
+   02: CRAFT STACK — OS DESKTOP EXPERIENCE
+══════════════════════════════════════════════════════════ */
+.freq-craft { background: linear-gradient(180deg, #0a0812 0%, #0c0a18 100%); }
+
+.craft-cube-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ─── Craft Tab Switcher ─── */
+.craft-tab-switcher {
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  background: rgba(18, 13, 32, 0.85);
+  border: 1px solid rgba(232, 200, 255, 0.14);
+  border-radius: 100px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(176, 111, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 10;
+}
+
+.craft-tab-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.52);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  overflow: hidden;
+}
+
+.craft-tab-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.craft-tab-btn.active {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(176, 111, 255, 0.32) 0%, rgba(249, 184, 212, 0.22) 100%);
+  border-color: rgba(232, 200, 255, 0.38);
+  box-shadow:
+    0 4px 20px rgba(176, 111, 255, 0.28),
+    inset 0 0 12px rgba(232, 200, 255, 0.15);
+}
+
+.craft-tab-icon {
+  flex-shrink: 0;
+  color: rgba(232, 200, 255, 0.6);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.craft-tab-btn:hover .craft-tab-icon,
+.craft-tab-btn.active .craft-tab-icon {
+  color: #fff;
+  transform: scale(1.12);
+}
+
+.craft-tab-count {
+  font-family: 'Fira Code', monospace;
+  font-size: 9.5px;
+  padding: 1px 6px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(232, 200, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.craft-tab-btn.active .craft-tab-count {
+  background: rgba(232, 200, 255, 0.25);
+  color: #fff;
+  border-color: rgba(232, 200, 255, 0.35);
+}
+
+.craft-tab-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 100px;
+  background: radial-gradient(circle at center, rgba(176, 111, 255, 0.45) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0.6;
+  filter: blur(4px);
+}
+
+/* Tool SVG Icons */
+.tool-svg-icon {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+.craft-win-icon .tool-svg-icon {
+  width: 22px;
+  height: 22px;
+}
+.craft-dock-icon .tool-svg-icon {
+  width: 22px;
+  height: 22px;
+}
+.freq-modal-title-wrap .tool-svg-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ─── OS Scene Container ─── */
+.craft-os-scene {
+  width: 100%;
+  max-width: 1020px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(232,200,255,0.1);
+  box-shadow:
+    0 0 0 1px rgba(232,200,255,0.04),
+    0 40px 120px -20px rgba(0,0,0,0.8),
+    0 0 80px -20px rgba(176,111,255,0.08);
+}
+
+/* ─── OS Menubar ─── */
+.craft-os-menubar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 1rem;
+  background: rgba(18,13,32,0.99);
+  border-bottom: 1px solid rgba(232,200,255,0.07);
+  z-index: 10;
+}
+
+.craft-os-mb-left {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex: 1;
+}
+
+.craft-os-logo {
+  color: #b06fff;
+  font-size: 12px;
+  line-height: 1;
+  filter: drop-shadow(0 0 4px rgba(176,111,255,0.6));
+}
+
+.craft-os-mb-left span:not(.craft-os-logo) {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  cursor: default;
+  transition: color 0.2s;
+}
+.craft-os-mb-left span:not(.craft-os-logo):hover { color: rgba(255,255,255,0.88); }
+
+.craft-os-mb-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(232,200,255,0.28);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.craft-os-mb-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.craft-os-tidy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(232, 200, 255, 0.08);
+  border: 1px solid rgba(232, 200, 255, 0.15);
+  color: rgba(232, 200, 255, 0.7);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.craft-os-tidy-btn:hover {
+  background: rgba(232, 200, 255, 0.18);
+  color: #fff;
+  border-color: rgba(232, 200, 255, 0.35);
+}
+
+.craft-os-mb-wifi {
+  font-size: 6px;
+  letter-spacing: -1px;
+  color: rgba(232,200,255,0.26);
+  line-height: 1;
+}
+
+.craft-os-mb-time {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.48);
+  letter-spacing: 0.04em;
+}
+
+/* ─── Desktop Area ─── */
+.craft-os-desktop {
+  position: relative;
+  height: clamp(380px, 44vw, 540px);
+  background: #070413;
+  overflow: hidden;
+  cursor: default;
+  touch-action: none;
+}
+
+.craft-os-desktop-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 30%, rgba(176,111,255,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 50% at 85% 65%, rgba(77,184,255,0.05) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 45% at 50% 85%, rgba(127,255,154,0.04) 0%, transparent 65%);
+  pointer-events: none;
+  animation: desktopAmbient 9s ease-in-out infinite alternate;
+}
+
+@keyframes desktopAmbient {
+  0%   { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* ─── Floating Windows ─── */
+.craft-window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(235px, 27vw, 305px);
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: var(--win-z, 1);
+  transition:
+    box-shadow 0.35s ease,
+    filter 0.35s ease,
+    border-color 0.35s ease;
+  border: 1px solid rgba(255,255,255,0.07);
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.craft-window.win-dragging {
+  cursor: grabbing !important;
+  transition: none !important;
+  box-shadow:
+    0 0 0 2px var(--accent, #b06fff),
+    0 20px 50px rgba(0,0,0,0.8),
+    0 0 40px rgba(176,111,255,0.3) !important;
+  filter: brightness(1.05) saturate(1.1) !important;
+  z-index: 999 !important;
+}
+
+.craft-window.win-inactive {
+  filter: brightness(0.6) saturate(0.65);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+}
+
+.craft-window.win-active {
+  filter: brightness(1) saturate(1);
+  border-color: var(--accent, #b06fff);
+  box-shadow:
+    0 0 0 1.5px var(--accent, #b06fff),
+    0 0 30px rgba(176,111,255,0.18),
+    0 24px 70px rgba(0,0,0,0.7);
+  z-index: calc(var(--win-z, 1) + 10);
+}
+
+/* ─── Window Title Bar ─── */
+.craft-win-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.85rem;
+  background: rgba(20,14,36,0.98);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  cursor: grab;
+  touch-action: none;
+}
+.craft-window.win-dragging .craft-win-chrome {
+  cursor: grabbing;
+}
+
+.craft-win-dots { display: flex; gap: 5px; flex-shrink: 0; }
+
+.craft-win-title-bar {
+  flex: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.42);
+  text-align: center;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.craft-win-tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  color: rgba(232,200,255,0.3);
+  padding: 2px 6px;
+  border: 1px solid rgba(232,200,255,0.1);
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: all 0.4s ease;
+}
+
+.craft-window.win-active .craft-win-tag {
+  color: var(--accent, rgba(232,200,255,0.7));
+  border-color: var(--accent, rgba(232,200,255,0.3));
+  text-shadow: 0 0 8px var(--accent, rgba(176,111,255,0.4));
+}
+
+/* ─── Window Body ─── */
+.craft-win-body {
+  padding: 0.85rem;
+  background: rgba(9,6,19,0.96);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  backdrop-filter: blur(16px);
+}
+
+.craft-win-top {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.craft-win-icon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.craft-win-icon .tool-logo-img { width: 24px; height: 24px; object-fit: contain; border-radius: 5px; }
+
+.craft-win-meta { flex: 1; min-width: 0; }
+
+.craft-win-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  margin: 0;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.craft-win-role {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  color: rgba(232,200,255,0.35);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0; margin-top: 1px;
+  transition: color 0.4s ease;
+}
+.craft-window.win-active .craft-win-role { color: var(--accent, rgba(232,200,255,0.55)); opacity: 0.75; }
+
+.craft-win-status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent, #7fff9a);
+  box-shadow: 0 0 8px var(--accent, #7fff9a);
+  animation: chipPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.craft-window.win-active .craft-win-status-dot { opacity: 1; }
+
+/* ─── Code area ─── */
+.craft-win-code-area {
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.craft-win-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.025);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.craft-win-code-lang {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  color: rgba(232,200,255,0.25);
+  letter-spacing: 0.12em;
+}
+
+.craft-win-line-count {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  color: rgba(255,255,255,0.14);
+  letter-spacing: 0.08em;
+}
+
+.craft-win-code {
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  line-height: 1.75;
+  color: rgba(232,200,255,0.6);
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 80px;
+  display: block;
+}
+
+.craft-win-cursor {
+  display: inline-block;
+  color: var(--accent, rgba(232,200,255,0.8));
+  animation: biosCursorBlink 0.6s step-end infinite;
+}
+
+/* Full snippet button */
+.craft-win-snippet-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(232,200,255,0.1);
+  background: rgba(232,200,255,0.03);
+  color: rgba(232,200,255,0.45);
+  font-family: 'Fira Code', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: fit-content;
+}
+.craft-win-snippet-btn:hover { background: rgba(232,200,255,0.1); border-color: rgba(232,200,255,0.28); color: rgba(232,200,255,0.88); }
+
+/* ─── Active glow ─── */
+.craft-win-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(176,111,255,0.08), transparent 65%);
+  transition: opacity 0.45s ease;
+}
+.craft-window.win-active .craft-win-glow { opacity: 1; }
+
+/* ─── macOS Dock ─── */
+.craft-os-dock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem 1rem 0.8rem;
+  background: rgba(13,9,24,0.98);
+  border-top: 1px solid rgba(232,200,255,0.07);
+}
+
+.craft-dock-inner {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.craft-dock-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 12px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.craft-dock-item:hover { transform: translateY(-10px) scale(1.18); }
+.craft-dock-item:hover .craft-dock-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.craft-dock-item.dock-bounce {
+  animation: dockBounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes dockBounce {
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-16px) scale(1.22); }
+  65%  { transform: translateY(-5px) scale(1.06); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.craft-dock-icon {
+  width: 46px; height: 46px;
+  border-radius: 13px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.craft-dock-icon .tool-logo-img { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; }
+
+.craft-dock-item.dock-active .craft-dock-icon {
+  border-color: rgba(176,111,255,0.45);
+  background: rgba(176,111,255,0.1);
+  box-shadow: 0 0 18px rgba(176,111,255,0.2), 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.craft-dock-indicator {
+  display: block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(232,200,255,0.65);
+  box-shadow: 0 0 6px rgba(232,200,255,0.4);
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.craft-dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(12,9,22,0.96);
+  border: 1px solid rgba(232,200,255,0.12);
+  border-radius: 7px;
+  padding: 4px 9px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.82);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+/* ══════════════════════════════════════════════════════════
+   03: NEURAL — AI CHAT ROOM
+══════════════════════════════════════════════════════════ */
+.freq-neural { background:linear-gradient(180deg,#0c0a18 0%,#0a0812 100%); }
+
+.chat-room {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  border-radius: 18px;
+  border: 1px solid rgba(232,200,255,0.08);
+  overflow: hidden;
+  background: rgba(10,8,18,0.7);
+  backdrop-filter: blur(16px);
+  height: clamp(420px, 55vh, 580px);
+  max-width: 860px;
+}
+
+/* Sidebar */
+.chat-sidebar {
+  border-right: 1px solid rgba(232,200,255,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem;
+  background: rgba(0,0,0,0.2);
+  overflow-y: auto;
+}
+
+.chat-sidebar-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: rgba(232,200,255,0.25);
+  text-transform: uppercase;
+  padding: 0 0.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.chat-ai-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: all 0.25s ease;
+  position: relative;
+}
+.chat-ai-tab:hover { background:rgba(232,200,255,0.04); border-color:rgba(232,200,255,0.08); }
+.chat-ai-tab.active { background:var(--ai-bg); border-color:var(--ai-border); }
+
+.chat-ai-avatar {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.chat-ai-avatar .tool-logo-img { width: 22px; height: 22px; object-fit:contain; border-radius:4px; }
+
+.chat-ai-meta { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
+.chat-ai-name { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:700; color:rgba(255,255,255,0.8); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.chat-ai-status { display:flex; align-items:center; gap:4px; font-family:'Fira Code',monospace; font-size:8px; color:rgba(255,255,255,0.3); letter-spacing:0.1em; }
+.chat-status-dot { width:5px; height:5px; border-radius:50%; animation:chipPulse 2s ease-in-out infinite; }
+
+.chat-msg-count { position:absolute; top:0.4rem; right:0.5rem; width:16px; height:16px; border-radius:50%; background:rgba(232,200,255,0.15); font-family:'Fira Code',monospace; font-size:8px; color:rgba(232,200,255,0.7); display:flex; align-items:center; justify-content:center; }
+
+/* Main chat area */
+.chat-main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 1.2rem;
+  border-bottom: 1px solid rgba(232,200,255,0.07);
+  background: rgba(0,0,0,0.15);
+}
+
+.chat-header-avatar {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.chat-header-avatar .tool-logo-img { width:24px; height:24px; object-fit:contain; border-radius:4px; }
+
+.chat-header-name { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:rgba(255,255,255,0.9); margin:0; letter-spacing:-0.01em; }
+.chat-header-sub { font-family:'Fira Code',monospace; font-size:8px; color:rgba(var(--ai-color),0.6); letter-spacing:0.15em; margin:0; }
+
+.chat-reset-btn {
+  margin-left: auto;
+  background: none;
+  border: 1px solid rgba(232,200,255,0.1);
+  border-radius: 6px;
+  color: rgba(232,200,255,0.35);
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+.chat-reset-btn:hover { border-color:rgba(232,200,255,0.25); color:rgba(232,200,255,0.7); }
+
+/* Messages */
+.chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232,200,255,0.08) transparent;
+}
+
+.chat-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+}
+.chat-empty-sub { font-family:'Fira Code',monospace; font-size:9px; color:rgba(255,255,255,0.2); letter-spacing:0.1em; }
+
+.chat-bubble-wrap { display:flex; align-items:flex-end; gap:0.5rem; }
+.user-bubble { flex-direction:row-reverse; }
+.ai-bubble { flex-direction:row; }
+
+.chat-bubble-avatar {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+.chat-bubble-avatar .tool-logo-img { width:18px; height:18px; object-fit:contain; border-radius:4px; }
+
+.chat-bubble {
+  max-width: 72%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.bubble-user {
+  background: rgba(176,111,255,0.18);
+  border: 1px solid rgba(176,111,255,0.25);
+  color: rgba(255,255,255,0.85);
+  border-bottom-right-radius: 4px;
+}
+
+.bubble-ai {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(232,200,255,0.1);
+  color: rgba(255,255,255,0.8);
+  border-bottom-left-radius: 4px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   04: SOUL — EDITORIAL GRID
+══════════════════════════════════════════════════════════ */
+.freq-soul { background: linear-gradient(180deg, #0a0812 0%, #0d0a18 100%); }
+
+/* ── Grid layout ── */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* ── Common block styles ── */
+.ed-block-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(232,200,255,0.35);
+  margin-bottom: 0.3rem;
+}
+
+.ed-block-title {
+  font-family: 'Clash Display', 'DM Sans', sans-serif;
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.88);
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+/* ── F1 Hero (col 1, row 1+2) ── */
+.ed-f1 {
+  grid-row: span 2;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 460px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.ed-f1-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 20%;
+  transition: transform 6s ease;
+}
+.ed-f1:hover .ed-f1-img { transform: scale(1.04); }
+
+.ed-f1-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,8,18,0.05) 0%,
+    rgba(10,8,18,0.3) 45%,
+    rgba(10,8,18,0.95) 100%
+  );
+}
+
+.ed-f1-hud {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+}
+.hud-item { display:flex; flex-direction:column; align-items:center; padding:5px 9px; background:rgba(0,0,0,0.65); border:1px solid rgba(255,255,255,0.1); border-radius:6px; backdrop-filter:blur(10px); gap:1px; }
+.hud-item span { font-family:'Fira Code',monospace; font-size:7px; letter-spacing:0.2em; color:rgba(255,255,255,0.4); }
+.hud-item strong { font-family:'Fira Code',monospace; font-size:13px; font-weight:700; color:rgba(255,255,255,0.9); letter-spacing:-0.02em; }
+.drs-active { color:#7fff9a !important; text-shadow:0 0 10px rgba(127,255,154,0.7); animation:drsFlicker 0.8s ease-in-out infinite; }
+@keyframes drsFlicker { 0%,100%{opacity:1;} 50%{opacity:0.7;} }
+
+/* Big driver number watermark */
+.ed-f1-num {
+  position: absolute;
+  top: -0.1em;
+  left: -0.05em;
+  font-family: 'Clash Display', 'DM Sans', sans-serif;
+  font-size: clamp(120px, 18vw, 220px);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  letter-spacing: -0.04em;
+}
+
+.ed-f1-foot {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.4rem 1.4rem 1.5rem;
+  z-index: 2;
+}
+
+.ed-f1-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #00D2BE;
+  text-shadow: 0 0 8px rgba(0, 210, 190, 0.35);
+  margin-bottom: 0.45rem;
+}
+
+.ed-f1-title {
+  font-family: 'Clash Display', 'DM Sans', sans-serif;
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.96);
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.ed-f1-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin: 0 0 0.9rem;
+  line-height: 1.6;
+}
+
+.ed-f1-bar { height:3px; background:rgba(255,255,255,0.07); border-radius:100px; overflow:hidden; }
+.ed-f1-fill { height:100%; background:linear-gradient(to right, #00A19B, #00D2BE, #27F4D2); border-radius:100px; box-shadow: 0 0 8px rgba(0, 210, 190, 0.45); animation:f1BarFill 1.5s ease-in-out infinite alternate; }
+@keyframes f1BarFill { from{width:78%;} to{width:86%;} }
+
+/* ── MUSIC (col 2, row 1) ── */
+.ed-music {
+  border-radius: 18px;
+  border: 1px solid rgba(176,111,255,0.1);
+  background: linear-gradient(145deg, rgba(176,111,255,0.06), rgba(10,8,18,0.85));
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  backdrop-filter: blur(10px);
+}
+
+/* Vinyl record */
+.ed-vinyl-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+}
+
+.ed-vinyl {
+  position: relative;
+  width: clamp(90px, 10vw, 120px);
+  height: clamp(90px, 10vw, 120px);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%,
+      #2a1a3e 0%,
+      #1a1025 25%,
+      #251535 50%,
+      #1a1025 65%,
+      #201530 85%,
+      #1a1025 100%
+    );
+  border: 2px solid rgba(232,200,255,0.12);
+  box-shadow: 0 0 0 1px rgba(232,200,255,0.04), 0 8px 32px rgba(0,0,0,0.5);
+  flex-shrink: 0;
+  transition: box-shadow 0.4s ease;
+}
+
+.ed-vinyl-spin {
+  animation: vinylRotate 2.2s linear infinite;
+  box-shadow: 0 0 0 1px rgba(176,111,255,0.12), 0 0 30px rgba(176,111,255,0.15), 0 8px 32px rgba(0,0,0,0.5);
+}
+
+@keyframes vinylRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.ed-vinyl-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.04);
+  transform: translate(-50%, -50%);
+}
+.r1 { width: 60%; height: 60%; }
+.r2 { width: 78%; height: 78%; }
+.r3 { width: 92%; height: 92%; }
+
+.ed-vinyl-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20%; height: 20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #e8c8ff 0%, #b06fff 100%);
+  box-shadow: 0 0 12px rgba(176,111,255,0.5);
+}
+
+.ed-vinyl-now {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  color: rgba(176,111,255,0.75);
+  letter-spacing: 0.12em;
+  animation: nowPlayingPulse 2s ease-in-out infinite;
+}
+.ed-vinyl-disc-icon { flex-shrink: 0; }
+@keyframes nowPlayingPulse { 0%,100%{opacity:0.7;} 50%{opacity:1;} }
+
+.ed-artists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ed-artist-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid rgba(232,200,255,0.12);
+  background: rgba(232,200,255,0.04);
+  color: rgba(255,255,255,0.45);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.ed-artist-chip:hover { background:rgba(232,200,255,0.1); border-color:rgba(232,200,255,0.28); color:rgba(232,200,255,0.9); }
+.ed-artist-chip.playing {
+  background: rgba(127,255,154,0.1);
+  border-color: rgba(127,255,154,0.35);
+  color: rgba(127,255,154,0.9);
+  box-shadow: 0 0 12px rgba(127,255,154,0.1);
+}
+
+.ed-platforms {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.ed-platform-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 8px;
+  border: 1px solid rgba(232,200,255,0.09);
+  background: rgba(232,200,255,0.03);
+  color: rgba(255,255,255,0.4);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.ed-platform-link:hover { background:rgba(232,200,255,0.08); border-color:rgba(232,200,255,0.2); color:rgba(255,255,255,0.8); }
+
+/* ── PERFUME (col 2, row 2) ── */
+.ed-perfume {
+  border-radius: 18px;
+  border: 1px solid rgba(249,184,212,0.1);
+  background: linear-gradient(145deg, rgba(249,184,212,0.05), rgba(10,8,18,0.85));
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  backdrop-filter: blur(10px);
+}
+
+.ed-perfume-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.ed-perfume-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(249,184,212,0.06);
+  transition: background 0.2s ease;
+}
+.ed-perfume-row:last-child { border-bottom: none; }
+.ed-perfume-row:hover { background: rgba(249,184,212,0.03); border-radius: 6px; }
+
+.ed-perfume-idx {
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  color: rgba(249,184,212,0.3);
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.ed-perfume-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ed-perfume-brand {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: -0.01em;
+}
+
+.ed-perfume-variant {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  color: rgba(249,184,212,0.45);
+  letter-spacing: 0.1em;
+}
+
+.ed-perfume-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(249,184,212,0.25);
+  flex-shrink: 0;
+}
+
+/* Scent cloud */
+.ed-scent-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 0.2rem;
+}
+
+.ed-scent-tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(249,184,212,calc(0.28 - var(--si) * 0.04));
+  padding: 3px 8px;
+  border-radius: 100px;
+  border: 1px solid rgba(249,184,212,calc(0.1 - var(--si) * 0.015));
+  background: rgba(249,184,212,0.03);
+}
+
+/* ── INSTAGRAM (col 1, row 3 — below F1) ── */
+.ed-instagram {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(201,100,66,0.12);
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.ed-insta-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(240,148,51,0.08) 0%,
+    rgba(196,48,143,0.08) 50%,
+    rgba(80,57,203,0.06) 100%
+  );
+}
+
+.ed-insta-content {
+  position: relative;
+  z-index: 1;
+  padding: 1.4rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ed-insta-eyebrow {
+  color: rgba(240,148,51,0.6);
+}
+
+.ed-insta-handle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Clash Display', 'DM Sans', sans-serif;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(255,255,255,0.88);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+.ed-insta-handle:hover { color: rgba(240,148,51,0.9); }
+.ed-insta-handle:hover .ed-insta-ext { opacity: 1; transform: translateY(-2px) translateX(2px); }
+.ed-insta-ext { opacity: 0.35; transition: all 0.3s ease; flex-shrink: 0; }
+
+.ed-insta-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.28);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.bubble-typing-cursor { color:rgba(232,200,255,0.7); animation:biosCursorBlink 0.6s step-end infinite; }
+
+/* Typing dots */
+.chat-typing-indicator { display:flex; align-items:center; gap:4px; padding:0.75rem 1rem; }
+.chat-typing-indicator span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(232,200,255,0.4);
+  animation: typingBounce 1.2s ease-in-out infinite;
+}
+.chat-typing-indicator span:nth-child(2) { animation-delay:0.2s; }
+.chat-typing-indicator span:nth-child(3) { animation-delay:0.4s; }
+@keyframes typingBounce { 0%,60%,100%{transform:translateY(0);} 30%{transform:translateY(-6px);} }
+
+/* Chat footer */
+.chat-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.2rem;
+  border-top: 1px solid rgba(232,200,255,0.07);
+  background: rgba(0,0,0,0.15);
+}
+
+.chat-input-mock {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(232,200,255,0.08);
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.05em;
+}
+
+.chat-send-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(176,111,255,0.3), rgba(232,200,255,0.15));
+  border: 1px solid rgba(176,111,255,0.35);
+  color: rgba(232,200,255,0.9);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  letter-spacing: 0.03em;
+}
+.chat-send-btn:hover:not(:disabled) { background:linear-gradient(135deg,rgba(176,111,255,0.45),rgba(232,200,255,0.25)); box-shadow:0 0 20px rgba(176,111,255,0.3); transform:translateY(-1px); }
+.chat-send-btn:disabled { opacity:0.45; cursor:not-allowed; }
+
+/* ══════════════════════════════════════════════════════════
+   05: OUTRO — LIVE STATUS & VIP PADDOCK PASS
+══════════════════════════════════════════════════════════ */
+.freq-outro { background:#0a0812; min-height:100vh; align-items:center; justify-content:center; text-align:center; padding: 8vh 1.5rem; }
+
+.outro-rings { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:0; }
+.outro-ring { position:absolute; border-radius:50%; border:1px solid rgba(0,210,190,calc(0.06 - var(--ri)*0.009)); animation:outroRingExpand calc(4s + var(--ri)*1.2s) ease-out infinite; animation-delay:calc(var(--ri)*0.8s); }
+@keyframes outroRingExpand { 0%{width:80px;height:80px;opacity:0.8;} 100%{width:calc(200px + var(--ri)*180px);height:calc(200px + var(--ri)*180px);opacity:0;} }
+
+.freq-outro-inner { position:relative; z-index:2; align-items:center; text-align:center; max-width:1040px; margin:0 auto; width: 100%; }
+.outro-ch-num { justify-content:center; }
+.freq-outro-title { font-family:'Clash Display','DM Sans',sans-serif; font-size:clamp(36px,5.5vw,76px); font-weight:700; line-height:1.06; letter-spacing:-0.025em; margin:0; color:rgba(255,255,255,0.94); }
+.outro-word-wrap { display:inline-block; overflow:hidden; vertical-align:bottom; }
+.outro-word { display:inline-block; clip-path:inset(100% 0% 0% 0%); opacity:0; }
+.outro-story { text-align:center; max-width:620px; margin:0.8rem auto 0; font-size:clamp(13px,1.15vw,16px); color:rgba(255,255,255,0.55); }
+
+/* ── 2-COLUMN COLLAB GRID ── */
+.freq-collab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+  width: 100%;
+  margin: 2.8rem 0 2.6rem;
+  text-align: left;
+}
+
+/* 1. LEFT CARD: Live Status Board */
+.freq-status-card {
+  background: linear-gradient(160deg, rgba(16, 12, 28, 0.85) 0%, rgba(8, 6, 16, 0.95) 100%);
+  border: 1px solid rgba(232, 200, 255, 0.12);
+  border-radius: 22px;
+  padding: 1.7rem;
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.4rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.freq-status-card:hover {
+  border-color: rgba(232, 200, 255, 0.24);
+  transform: translateY(-2px);
+}
+
+.status-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.status-live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7fff9a;
+  box-shadow: 0 0 10px #7fff9a;
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+@keyframes livePulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+
+.status-live-text {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #7fff9a;
+}
+.status-live-clock {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+}
+
+.status-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+.status-feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.status-feed-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e8c8ff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.status-feed-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+.feed-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.38);
+  text-transform: uppercase;
+}
+.feed-val {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.4;
+}
+.feed-dim {
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+}
+.status-val-avail {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #7fff9a;
+  font-weight: 600;
+}
+.avail-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #7fff9a;
+  box-shadow: 0 0 6px #7fff9a;
+}
+.f1-mercy-val {
+  color: #00D2BE !important;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(0,210,190,0.3);
+}
+
+.status-card-footer {
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.status-quote {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(232,200,255,0.7);
+  line-height: 1.5;
+  display: block;
+}
+
+/* 2. RIGHT CARD: VIP Paddock Pass */
+.freq-pass-card {
+  background: linear-gradient(145deg, rgba(10, 18, 26, 0.94) 0%, rgba(6, 9, 16, 0.98) 100%);
+  border: 1px solid rgba(0, 210, 190, 0.28);
+  border-radius: 22px;
+  padding: 2.2rem 1.8rem 1.8rem;
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 210, 190, 0.08), 0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(0, 210, 190, 0.25);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.freq-pass-card:hover {
+  border-color: rgba(0, 210, 190, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 24px 70px rgba(0, 210, 190, 0.15), 0 30px 80px rgba(0,0,0,0.7);
+}
+
+/* Lanyard slot */
+.pass-hanger {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 14px;
+  background: rgba(0,0,0,0.85);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pass-hanger-slot {
+  width: 32px;
+  height: 4px;
+  background: #0a0812;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Hologram sweep effect */
+.pass-hologram-strip {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 210, 190, 0.09), rgba(176, 111, 255, 0.09), transparent);
+  transform: skewX(-25deg);
+  animation: passHolo 5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes passHolo { 0% { left: -120%; } 40%, 100% { left: 220%; } }
+
+.pass-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.pass-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pass-logo-badge {
+  font-family: 'Clash Display', 'DM Sans', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #00A19B, #00D2BE);
+  color: #000;
+  box-shadow: 0 0 12px rgba(0,210,190,0.4);
+}
+.pass-supertitle {
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.4);
+  display: block;
+}
+.pass-title {
+  font-family: 'Clash Display', 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.96);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.pass-code {
+  font-family: 'Fira Code', monospace;
+  font-size: 9.5px;
+  color: rgba(0, 210, 190, 0.7);
+  letter-spacing: 0.1em;
+  background: rgba(0, 210, 190, 0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 210, 190, 0.2);
+}
+
+.pass-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(0, 210, 190, 0.08);
+  border: 1px solid rgba(0, 210, 190, 0.25);
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #00D2BE;
+  align-self: flex-start;
+}
+.pass-sparkle-icon {
+  animation: spinSlow 8s linear infinite;
+}
+@keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.pass-pitch {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.68);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Actions in Pass */
+.pass-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.pass-copy-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(0, 210, 190, 0.07);
+  border: 1px solid rgba(0, 210, 190, 0.28);
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.pass-copy-btn:hover {
+  background: rgba(0, 210, 190, 0.15);
+  border-color: rgba(0, 210, 190, 0.55);
+  box-shadow: 0 0 20px rgba(0, 210, 190, 0.2);
+}
+.pass-copy-btn.copied {
+  background: rgba(127, 255, 154, 0.15);
+  border-color: #7fff9a;
+  box-shadow: 0 0 20px rgba(127, 255, 154, 0.3);
+}
+.copy-btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(0, 210, 190, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00D2BE;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.pass-copy-btn.copied .copy-btn-icon {
+  background: rgba(127, 255, 154, 0.25);
+  color: #7fff9a;
+}
+.copy-btn-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1px;
+}
+.copy-sublabel {
+  font-family: 'Fira Code', monospace;
+  font-size: 8.5px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.copy-val {
+  font-family: 'Fira Code', monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.copy-badge {
+  font-family: 'Fira Code', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.8);
+  transition: all 0.2s ease;
+}
+.pass-copy-btn.copied .copy-badge {
+  background: #7fff9a;
+  color: #060410;
+}
+
+/* Quick links pill row */
+.pass-quick-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.pass-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 6px;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.8);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.pass-link-btn:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.22);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.pass-link-btn.cv-btn {
+  background: rgba(232, 200, 255, 0.08);
+  border-color: rgba(232, 200, 255, 0.25);
+  color: #e8c8ff;
+}
+.pass-link-btn.cv-btn:hover {
+  background: rgba(232, 200, 255, 0.16);
+  border-color: rgba(232, 200, 255, 0.45);
+  color: #fff;
+}
+
+/* ══════════════════════════════════════════════════════════
+   MODALS & TERMINAL
+══════════════════════════════════════════════════════════ */
+.freq-modal-backdrop { position:fixed; inset:0; background:rgba(10,8,18,0.85); backdrop-filter:blur(12px); z-index:1000; display:flex; align-items:center; justify-content:center; padding:1rem; animation:modalBackdropIn 0.2s ease; }
+@keyframes modalBackdropIn { from{opacity:0;} to{opacity:1;} }
+.freq-code-modal { width:100%; max-width:540px; border-radius:14px; background:rgba(14,11,22,0.98); border:1px solid rgba(232,200,255,0.12); overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.6); animation:modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes modalIn { from{transform:scale(0.92) translateY(16px);opacity:0;} to{transform:scale(1) translateY(0);opacity:1;} }
+.freq-modal-header { display:flex; align-items:center; gap:0.7rem; padding:0.75rem 1rem; background:rgba(255,255,255,0.02); border-bottom:1px solid rgba(232,200,255,0.07); }
+.freq-modal-dots { display:flex; gap:5px; }
+.freq-modal-title-wrap { flex:1; display:flex; align-items:center; gap:7px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:rgba(255,255,255,0.8); }
+.freq-modal-title-wrap .tool-logo-img { width:18px; height:18px; border-radius:4px; object-fit:contain; }
+.freq-modal-close { background:none; border:none; color:rgba(255,255,255,0.35); cursor:pointer; padding:4px; border-radius:4px; display:flex; align-items:center; transition:all 0.2s; margin-left:auto; }
+.freq-modal-close:hover { color:rgba(255,255,255,0.8); background:rgba(255,255,255,0.06); }
+.freq-code-block { padding:1.4rem; margin:0; font-family:'Fira Code',monospace; font-size:12px; line-height:1.75; color:rgba(232,200,255,0.8); white-space:pre-wrap; word-break:break-word; max-height:300px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:rgba(232,200,255,0.12) transparent; }
+.freq-modal-footer { padding:0.6rem 1rem; border-top:1px solid rgba(232,200,255,0.06); background:rgba(0,0,0,0.2); }
+.modal-footer-role { font-family:'Fira Code',monospace; font-size:9px; letter-spacing:0.18em; color:rgba(232,200,255,0.3); text-transform:uppercase; }
+
+.freq-terminal { width:100%; max-width:560px; border-radius:14px; background:rgba(10,8,18,0.98); border:1px solid rgba(232,200,255,0.1); overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.7); animation:modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+.freq-terminal-header { display:flex; align-items:center; gap:0.7rem; padding:0.65rem 1rem; background:rgba(255,255,255,0.02); border-bottom:1px solid rgba(232,200,255,0.07); font-family:'Fira Code',monospace; font-size:11px; color:rgba(255,255,255,0.3); }
+.freq-terminal-dots { display:flex; gap:5px; }
+.freq-terminal-body { padding:1rem; display:flex; flex-direction:column; gap:0.35rem; max-height:260px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:rgba(232,200,255,0.1) transparent; }
+.term-line pre { font-family:'Fira Code',monospace; font-size:11px; white-space:pre-wrap; word-break:break-word; margin:0; line-height:1.5; }
+.term-system pre { color:rgba(176,111,255,0.7); }
+.term-info    pre { color:rgba(232,200,255,0.45); }
+.term-user    pre { color:rgba(255,255,255,0.7); }
+.term-output  pre { color:rgba(127,255,154,0.7); }
+.term-success pre { color:#7fff9a; font-weight:600; }
+.term-error   pre { color:rgba(255,100,80,0.75); }
+.term-form { display:flex; align-items:center; gap:6px; padding-top:0.4rem; border-top:1px solid rgba(232,200,255,0.06); }
+.term-prompt { font-family:'Fira Code',monospace; font-size:12px; color:#b06fff; flex-shrink:0; }
+.term-input { flex:1; background:none; border:none; outline:none; font-family:'Fira Code',monospace; font-size:12px; color:rgba(255,255,255,0.85); caret-color:#b06fff; }
+.term-input::placeholder { color:rgba(255,255,255,0.2); }
+.term-submit { background:none; border:none; color:rgba(232,200,255,0.4); cursor:pointer; padding:3px; display:flex; align-items:center; transition:color 0.2s; }
+.term-submit:hover { color:rgba(232,200,255,0.8); }
+
+.tdot { display:block; width:10px; height:10px; border-radius:50%; }
+.tdot.red    { background:#ff5f57; }
+.tdot.yellow { background:#febc2e; }
+.tdot.green  { background:#28c840; }
+.tool-logo-img { width:100%; height:100%; object-fit:contain; border-radius:6px; }
+
+.freq-terminal-fab { position:fixed; bottom:1.8rem; right:1.8rem; width:44px; height:44px; border-radius:50%; background:rgba(14,11,22,0.92); border:1px solid rgba(232,200,255,0.15); color:rgba(232,200,255,0.65); cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:200; backdrop-filter:blur(12px); transition:all 0.3s ease; box-shadow:0 4px 20px rgba(0,0,0,0.4); }
+.freq-terminal-fab:hover { background:rgba(176,111,255,0.15); border-color:rgba(176,111,255,0.4); color:rgba(232,200,255,0.9); transform:translateY(-2px) scale(1.05); box-shadow:0 8px 30px rgba(176,111,255,0.25); }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE OVERHAUL (Tablet & Mobile)
+══════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .bento-grid { grid-template-columns: 1fr 1fr; }
+  .bento-center { grid-column: span 2; grid-row: 1; }
+  .bento-left   { grid-column: 1; grid-row: 2; }
+  .bento-right  { grid-column: 2; grid-row: 2; }
+  .craft-os-desktop { height: 440px; }
+  .craft-window { width: clamp(220px, 26vw, 270px); }
+  .editorial-grid { grid-template-columns: 1fr; }
+  .ed-f1 { grid-row: auto; min-height: 340px; }
+  .chat-room { grid-template-columns: 190px 1fr; }
+}
+
+@media (max-width: 768px) {
+  .freq-rail { display: none; }
+  .cursor-trail-dot { display: none; }
+  
+  .freq-chapter {
+    padding: clamp(6vh, 8vh, 10vh) clamp(1rem, 4vw, 2rem);
+    min-height: auto;
+  }
+  .freq-chapter-inner {
+    gap: 2rem;
+  }
+  .freq-ch-title {
+    font-size: clamp(28px, 7vw, 42px);
+    line-height: 1.15;
+  }
+  .freq-ch-story {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* 00: BIOS Intro */
+  .bios-intro {
+    min-height: 100svh;
+    height: auto;
+    padding: 1.5rem 1rem 3rem;
+  }
+  .freq-intro-content-boot {
+    padding: 4vh 1rem;
+  }
+  .bios-terminal {
+    font-size: 11px;
+    line-height: 1.65;
+  }
+  .bios-boot-bar-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .bios-boot-bar {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  /* 01: Bento */
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .bento-center, .bento-left, .bento-right {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .bento-inner {
+    transform: none !important;
+    padding: 1.2rem;
+  }
+  .bento-img-wrap {
+    min-height: 140px;
+    max-height: 200px;
+  }
+
+  /* 02: Craft OS Desktop */
+  .craft-cube-layout {
+    gap: 1.5rem;
+  }
+  .craft-os-scene {
+    border-radius: 12px;
+  }
+  .craft-os-menubar {
+    height: 36px;
+    padding: 0 0.65rem;
+  }
+  .craft-os-mb-left {
+    gap: 0.6rem;
+  }
+  .craft-os-mb-tab:nth-child(n+3) {
+    display: none;
+  }
+  .craft-os-mb-center {
+    display: none;
+  }
+  .craft-os-mb-right {
+    gap: 0.5rem;
+  }
+  .craft-os-desktop {
+    height: 420px;
+  }
+  .craft-window {
+    width: min(280px, 84vw);
+    border-radius: 10px;
+  }
+  .craft-win-chrome {
+    padding: 0.5rem 0.7rem;
+  }
+  .craft-win-body {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+  .craft-win-code {
+    font-size: 8.5px;
+    min-height: 70px;
+    padding: 0.5rem 0.65rem;
+  }
+  .craft-os-dock {
+    padding: 0.5rem 0.8rem 0.7rem;
+  }
+  .craft-dock-inner {
+    padding: 0.4rem 0.8rem;
+    gap: 0.4rem;
+    border-radius: 18px;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  .craft-dock-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+  .craft-dock-icon .tool-logo-img {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* 03: Neural Layer (AI Chat) */
+  .chat-room {
+    grid-template-columns: 1fr;
+    height: auto;
+    max-height: none;
+  }
+  .chat-sidebar {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(232, 200, 255, 0.07);
+    padding: 0.65rem;
+    gap: 0.4rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chat-sidebar-label {
+    display: none;
+  }
+  .chat-ai-tab {
+    width: auto;
+    flex-shrink: 0;
+    padding: 0.45rem 0.75rem;
+  }
+  .chat-ai-meta {
+    display: flex;
+  }
+  .chat-ai-status {
+    display: none;
+  }
+  .chat-main {
+    height: 420px;
+  }
+  .chat-body {
+    padding: 0.85rem;
+  }
+  .chat-bubble {
+    max-width: 86%;
+    font-size: 11.5px;
+  }
+  .chat-footer {
+    padding: 0.7rem 0.85rem;
+    gap: 0.5rem;
+  }
+  .chat-input-mock {
+    display: none;
+  }
+  .chat-send-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem 1rem;
+    font-size: 12px;
+  }
+
+  /* 04: Off-Circuit (Editorial) */
+  .editorial-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .ed-f1 {
+    min-height: 280px;
+  }
+  .ed-f1-hud {
+    top: 0.65rem;
+    right: 0.65rem;
+    gap: 0.35rem;
+  }
+  .hud-item {
+    padding: 3px 6px;
+  }
+  .hud-item strong {
+    font-size: 11px;
+  }
+  .ed-f1-num {
+    font-size: 100px;
+  }
+  .ed-f1-foot {
+    padding: 1rem;
+  }
+  .ed-f1-title {
+    font-size: 18px;
+  }
+  .ed-f1-desc {
+    font-size: 11.5px;
+    margin-bottom: 0.6rem;
+  }
+  .ed-music, .ed-perfume {
+    padding: 1.1rem;
+  }
+  .ed-vinyl {
+    width: 84px;
+    height: 84px;
+  }
+  .ed-artist-chip {
+    font-size: 9.5px;
+    padding: 3px 8px;
+  }
+  .ed-insta-content {
+    padding: 1.1rem;
+  }
+  .ed-insta-handle {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+
+  /* 05: Outro (Hire Terminal) */
+  .freq-outro {
+    padding: 6vh 1rem;
+  }
+  .freq-outro-title {
+    font-size: clamp(30px, 8.5vw, 54px);
+    line-height: 1.1;
+  }
+  .outro-story {
+    font-size: 12.5px;
+  }
+  .freq-collab-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin: 1.8rem 0;
+  }
+  .pass-quick-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .freq-back-btn {
+    padding: 0.8rem 1.6rem;
+    font-size: 11.5px;
+  }
+
+  /* Modals & FAB */
+  .freq-terminal-fab {
+    bottom: 1.2rem;
+    right: 1.2rem;
+    width: 40px;
+    height: 40px;
+  }
+  .freq-code-modal, .freq-terminal {
+    max-width: 94vw;
+    border-radius: 10px;
+  }
+  .freq-code-block {
+    padding: 1rem;
+    font-size: 10.5px;
+    max-height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .freq-chapter-header {
+    gap: 0.5rem;
+  }
+  .craft-tab-switcher {
+    width: 100%;
+    max-width: 340px;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px;
+  }
+  .craft-tab-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 7px 12px;
+    font-size: 11px;
+    gap: 6px;
+  }
+  .craft-os-desktop {
+    height: 380px;
+  }
+  .craft-window {
+    width: min(260px, 88vw);
+  }
+  .craft-dock-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .craft-dock-icon .tool-logo-img {
+    width: 22px;
+    height: 22px;
+  }
+  .chat-main {
+    height: 380px;
+  }
+}

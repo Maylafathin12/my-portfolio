@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import maylaPhoto from '../../assets/may.png'
+import maylaPhoto from '../../assets/may.webp'
 import { useIsMobile } from '../../hooks/useIsMobile'
 import { useLanguage } from '../../context/LanguageContext'
 

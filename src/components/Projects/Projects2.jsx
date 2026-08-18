@@ -3,11 +3,11 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import * as THREE from 'three'
 import { useIsMobile } from '../../hooks/useIsMobile'
-import sehatImg from '../../assets/sehat.png'
-import sahalImg from '../../assets/sahal.png'
-import commandImg from '../../assets/command.png'
-import yumyImg from '../../assets/yumy.png'
-import recycleImg from '../../assets/recycle.png'
+import sehatImg from '../../assets/sehat.webp'
+import sahalImg from '../../assets/sahal.webp'
+import commandImg from '../../assets/command.webp'
+import yumyImg from '../../assets/yumy.webp'
+import recycleImg from '../../assets/recycle.webp'
 
 gsap.registerPlugin(ScrollTrigger)
 

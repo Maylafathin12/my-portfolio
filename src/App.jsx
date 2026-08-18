@@ -13,6 +13,8 @@ import ConstellationNav from './components/ConstellationNav/ConstellationNav'
 import Certifications from './components/Certifications/Certifications'
 import ProjectDetail from './components/ProjectDetail/ProjectDetail'
 import LanguageToggle from './components/LanguageToggle/LanguageToggle'
+import Uses from './components/Uses/Uses'
+import { useAboutUnlock } from './context/AboutUnlockContext'
 
 function Home({ preloaderDone, activeSection }) {
   return (
@@ -31,10 +33,12 @@ function Home({ preloaderDone, activeSection }) {
 }
 
 function App() {
-  const [preloaderDone, setPreloaderDone] = useState(false)
+  const [preloaderDone, setPreloaderDone] = useState(true)
   const [activeSection, setActiveSection] = useState('hero')
   const lenisRef = useRef(null)
   const location = useLocation()
+  const { isUnlocked, requestShake } = useAboutUnlock()
+  const isHomeRoute = location.pathname === '/' || location.pathname === ''
 
   // Scroll to top or hash on route change
   useEffect(() => {
@@ -78,11 +82,89 @@ function App() {
     return () => lenis.destroy()
   }, [preloaderDone])
 
+  // Lock scroll past About until "More About Me" is clicked
+  useEffect(() => {
+    if (!preloaderDone || !isHomeRoute || isUnlocked) return
+
+    const aboutEl = document.getElementById('about')
+    if (!aboutEl) return
+
+    const getMaxScroll = () => {
+      const aboutBottom = aboutEl.offsetTop + aboutEl.offsetHeight
+      return Math.max(0, aboutBottom - window.innerHeight + 32)
+    }
+
+    let shakeCooldown = false
+    const triggerBlockedScroll = () => {
+      if (shakeCooldown) return
+      shakeCooldown = true
+      requestShake()
+      setTimeout(() => {
+        shakeCooldown = false
+      }, 700)
+    }
+
+    const enforceLock = () => {
+      const maxScroll = getMaxScroll()
+      if (window.scrollY > maxScroll + 2) {
+        const lenis = lenisRef.current
+        if (lenis) {
+          lenis.scrollTo(maxScroll, { immediate: true })
+        } else {
+          window.scrollTo({ top: maxScroll, behavior: 'auto' })
+        }
+        triggerBlockedScroll()
+      }
+    }
+
+    const handleWheel = (e) => {
+      const maxScroll = getMaxScroll()
+      if (window.scrollY >= maxScroll - 8 && e.deltaY > 0) {
+        e.preventDefault()
+        triggerBlockedScroll()
+      }
+    }
+
+    let touchStartY = 0
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY
+    }
+
+    const handleTouchMove = (e) => {
+      const maxScroll = getMaxScroll()
+      const deltaY = touchStartY - e.touches[0].clientY
+      if (window.scrollY >= maxScroll - 8 && deltaY > 0) {
+        e.preventDefault()
+        triggerBlockedScroll()
+      }
+    }
+
+    const lenis = lenisRef.current
+    if (lenis) {
+      lenis.on('scroll', enforceLock)
+    }
+
+    window.addEventListener('scroll', enforceLock, { passive: true })
+    window.addEventListener('wheel', handleWheel, { passive: false })
+    window.addEventListener('touchstart', handleTouchStart, { passive: true })
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
+
+    return () => {
+      if (lenis) {
+        lenis.off('scroll', enforceLock)
+      }
+      window.removeEventListener('scroll', enforceLock)
+      window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+    }
+  }, [preloaderDone, isHomeRoute, isUnlocked, requestShake])
+
   // Active section tracker
   useEffect(() => {
     if (!preloaderDone) return
     const sectionIds = ['hero', 'about', 'projects', 'experience', 'skills', 'certifications', 'education', 'contact']
-    
+
     const handleScroll = () => {
       const center = window.innerHeight / 2
       let currentId = 'hero'
@@ -98,7 +180,7 @@ function App() {
           }
         }
       }
-      
+
       // Prevent unnecessary state updates
       setActiveSection((prev) => (prev !== currentId ? currentId : prev))
     }
@@ -106,7 +188,7 @@ function App() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     // Initial check
     handleScroll()
-    
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [preloaderDone])
 
@@ -114,9 +196,14 @@ function App() {
     <main>
       <LanguageToggle />
       {!preloaderDone && <Preloader onComplete={() => setPreloaderDone(true)} />}
-      
+
       <Routes>
         <Route path="/" element={<Home preloaderDone={preloaderDone} activeSection={activeSection} />} />
+        <Route path="/uses" element={
+          <div style={{ opacity: preloaderDone ? 1 : 0, transition: 'opacity 0.8s ease' }}>
+            <Uses />
+          </div>
+        } />
         <Route path="/project/:id" element={
           <div style={{ opacity: preloaderDone ? 1 : 0, transition: 'opacity 0.8s ease' }}>
             <ProjectDetail />
