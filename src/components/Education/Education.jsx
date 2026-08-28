@@ -266,7 +266,7 @@ const Education = () => {
             {/* Info */}
             <div style={{ padding: '0 18px 18px', textAlign: 'center' }}>
               <h3 style={{ fontFamily: 'Clash Display, Arial Black, sans-serif', fontSize: 18, fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', margin: '0 0 4px' }}>Mayla</h3>
-              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic', fontSize: 12, color: 'rgba(232,200,255,0.9)', margin: '0 0 14px' }}>Design Engineer</p>
+              <p style={{ fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic', fontSize: 12, color: 'rgba(232,200,255,0.9)', margin: '0 0 14px' }}>Frontend Developer</p>
 
               <div style={{ width: '100%', height: 1, background: 'rgba(232,200,255,0.2)', marginBottom: 14 }} />
 

@@ -222,9 +222,7 @@ const Hero = () => {
             </h1>
 
             <div ref={roleRef} className="hero-role">
-              <span>{th.role1}</span>
-              <span className="hero-role-dot" />
-              <span>{th.role2}</span>
+              <span>{th.role}</span>
             </div>
           </div>
         </div>
