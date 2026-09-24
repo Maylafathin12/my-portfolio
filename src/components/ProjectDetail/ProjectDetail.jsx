@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ExternalLink, Users, Target, Rocket, AlertCircle, CheckCircle2, Map, ChevronLeft, ChevronRight, Lightbulb, GripVertical } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Users, Target, Rocket, AlertCircle, CheckCircle2, Map, ChevronLeft, ChevronRight, Lightbulb, GripVertical, X } from 'lucide-react';
 import { projectsData } from '../../data/projectsData';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -12,11 +12,50 @@ const ProjectDetail = () => {
   const navigate = useNavigate();
   const project = projects.find((p) => p.id === id);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  const getScreenshotUrl = (src) => {
+    if (!src) return '';
+    // If it's already a resolved Vite asset URL (blob:, data:, or http/https or a hashed path), use as-is
+    if (src.startsWith('blob:') || src.startsWith('data:') || src.startsWith('http') || src.startsWith('/assets/')) return src;
+    // Otherwise it's a raw public path like /ss-eduresearch/..., prepend BASE_URL
+    const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
+    return `${import.meta.env.BASE_URL}${cleanSrc}`;
+  };
 
   // Auto-scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Keyboard navigation for Lightbox
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isLightboxOpen || !project.screenshots) return;
+      if (e.key === 'ArrowRight') {
+        setCurrentImgIndex((prev) => (prev + 1) % project.screenshots.length);
+      } else if (e.key === 'ArrowLeft') {
+        setCurrentImgIndex((prev) => (prev - 1 + project.screenshots.length) % project.screenshots.length);
+      } else if (e.key === 'Escape') {
+        setIsLightboxOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, project.screenshots]);
+
+  // Prevent background scrolling when lightbox is open
+  useEffect(() => {
+    if (isLightboxOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isLightboxOpen]);
 
   if (!project) {
     return (
@@ -432,6 +471,63 @@ const ProjectDetail = () => {
         />
 
         <h2 className="font-['Clash_Display'] text-3xl md:text-4xl mb-8 relative z-10">Interested in building something similar?</h2>
+        
+        {/* Screenshots Preview Box */}
+        {project.screenshots && project.screenshots.length > 0 && (
+          <div className="max-w-[800px] mx-auto mb-12 relative z-10 px-4">
+            <div 
+              className="relative rounded-3xl border border-white/10 bg-white/[0.02] p-5 shadow-2xl backdrop-blur-md"
+              style={{ boxShadow: `inset 0 0 20px ${project.glow}10, 0 10px 30px rgba(0,0,0,0.5)` }}
+            >
+              <div className={`grid gap-4 ${
+                project.screenshots.length === 1 ? 'grid-cols-1' :
+                project.screenshots.length === 2 ? 'grid-cols-2' :
+                project.screenshots.length === 3 ? 'grid-cols-3' :
+                'grid-cols-2 md:grid-cols-4'
+              }`}>
+                {project.screenshots.slice(0, 4).map((src, index) => (
+                  <div 
+                    key={index}
+                    onClick={() => {
+                      setCurrentImgIndex(index);
+                      setIsLightboxOpen(true);
+                    }}
+                    className={`group relative overflow-hidden cursor-pointer border border-white/5 hover:border-[#e8c8ff]/30 hover:scale-[1.03] transition-all duration-300 bg-black/40 rounded-xl ${
+                      project.screenshots.length === 1 ? 'aspect-video' : 'aspect-video md:aspect-[4/3]'
+                    }`}
+                  >
+                    <img 
+                      src={getScreenshotUrl(src)} 
+                      alt={`Screenshot preview ${index + 1}`} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="text-white text-[10px] font-['DM_Sans'] uppercase tracking-wider bg-black/75 px-3 py-1.5 rounded-full border border-white/10">
+                        {language === 'en' ? 'View' : 'Lihat'}
+                      </span>
+                    </div>
+                    {index === 3 && project.screenshots.length > 4 && (
+                      <div 
+                        className="absolute inset-0 bg-black/75 flex flex-col items-center justify-center text-center p-2 cursor-pointer group-hover:bg-black/70 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImgIndex(3);
+                          setIsLightboxOpen(true);
+                        }}
+                      >
+                        <span className="text-xl md:text-2xl font-bold text-white">+{project.screenshots.length - 3}</span>
+                        <span className="text-[9px] text-[#e8c8ff] uppercase tracking-wider font-['DM_Sans'] mt-0.5">
+                          {language === 'en' ? 'More Screenshots' : 'Screenshot Lain'}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
           <Link
             to="/#projects"
@@ -447,13 +543,26 @@ const ProjectDetail = () => {
               className="font-['DM_Sans'] text-xs uppercase tracking-widest px-8 py-4 rounded-full text-black transition-all hover:scale-105"
               style={{ backgroundColor: project.glow, boxShadow: `0 0 30px ${project.glow}40` }}
             >
-              View Live Website
+              {language === 'en' ? 'View Live Website' : 'Lihat Website'}
             </a>
+          )}
+          {project.screenshots && project.screenshots.length > 0 && (
+            <button
+              onClick={() => {
+                setCurrentImgIndex(0);
+                setIsLightboxOpen(true);
+              }}
+              className="font-['DM_Sans'] text-xs uppercase tracking-widest px-8 py-4 rounded-full text-black transition-all hover:scale-105 cursor-pointer"
+              style={{ backgroundColor: project.glow, boxShadow: `0 0 30px ${project.glow}40` }}
+            >
+              {language === 'en' ? 'View Screenshots' : 'Lihat Screenshot'}
+            </button>
           )}
         </div>
       </section>
 
-      {project.link && !project.isComingSoon && (
+      {/* Floating Action Button (View Live or View Screenshots) */}
+      {((project.link && !project.isComingSoon) || (project.screenshots && project.screenshots.length > 0)) && (
         <motion.div
           drag
           dragMomentum={false}
@@ -478,26 +587,105 @@ const ProjectDetail = () => {
             <GripVertical size={16} />
           </div>
 
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="pointer-events-auto relative flex items-center gap-2 font-['DM_Sans'] text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-full text-black transition-all duration-300 hover:scale-102 group overflow-hidden view-live-draggable-btn"
-            style={{ 
-              backgroundColor: project.glow, 
-              boxShadow: `0 0 20px ${project.glow}50`,
-            }}
-          >
-            {/* Shimmer sweep effect */}
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full shimmer-effect" />
-            
-            {/* Pulsing ring outline */}
-            <span className="absolute inset-0 rounded-full pulse-ring-effect pointer-events-none" />
-
-            View Live <ExternalLink size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+          {project.link ? (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pointer-events-auto relative flex items-center gap-2 font-['DM_Sans'] text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-full text-black transition-all duration-300 hover:scale-102 group overflow-hidden view-live-draggable-btn"
+              style={{ 
+                backgroundColor: project.glow, 
+                boxShadow: `0 0 20px ${project.glow}50`,
+              }}
+            >
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full shimmer-effect" />
+              <span className="absolute inset-0 rounded-full pulse-ring-effect pointer-events-none" />
+              {language === 'en' ? 'View Live' : 'Lihat Website'} <ExternalLink size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          ) : (
+            <button
+              onClick={() => {
+                setCurrentImgIndex(0);
+                setIsLightboxOpen(true);
+              }}
+              className="pointer-events-auto relative flex items-center gap-2 font-['DM_Sans'] text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-full text-black transition-all duration-300 hover:scale-102 group overflow-hidden view-live-draggable-btn cursor-pointer"
+              style={{ 
+                backgroundColor: project.glow, 
+                boxShadow: `0 0 20px ${project.glow}50`,
+              }}
+            >
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full shimmer-effect" />
+              <span className="absolute inset-0 rounded-full pulse-ring-effect pointer-events-none" />
+              {language === 'en' ? 'Screenshots' : 'Galeri Foto'} <ExternalLink size={12} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+          )}
         </motion.div>
       )}
+
+      {/* ─── LIGHTBOX MODAL ────────────────────────────────────── */}
+      <AnimatePresence>
+        {isLightboxOpen && project.screenshots && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-black/95 backdrop-blur-md select-none"
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsLightboxOpen(false)}
+              className="absolute top-6 right-6 z-[10002] w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Navigation Indicators */}
+            <div className="absolute top-6 left-6 z-[10002] font-['DM_Sans'] text-xs text-white/50 tracking-widest">
+              {currentImgIndex + 1} <span className="mx-1">/</span> {project.screenshots.length}
+            </div>
+
+            {/* Main Interactive Image Area */}
+            <div className="relative w-full max-w-[1200px] h-[75vh] flex items-center justify-center px-4 md:px-16" onClick={(e) => e.stopPropagation()}>
+              
+              {/* Prev Button */}
+              <button
+                onClick={() => setCurrentImgIndex((prev) => (prev - 1 + project.screenshots.length) % project.screenshots.length)}
+                className="absolute left-4 md:left-6 z-[10002] w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:scale-105 transition-all cursor-pointer"
+              >
+                <ChevronLeft size={24} />
+              </button>
+
+              {/* Image Container with framer motion slide effect */}
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentImgIndex}
+                  src={getScreenshotUrl(project.screenshots[currentImgIndex])}
+                  alt={`Screenshot ${currentImgIndex + 1}`}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="max-w-full max-h-full object-contain rounded-lg shadow-2xl border border-white/5"
+                />
+              </AnimatePresence>
+
+              {/* Next Button */}
+              <button
+                onClick={() => setCurrentImgIndex((prev) => (prev + 1) % project.screenshots.length)}
+                className="absolute right-4 md:right-6 z-[10002] w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 hover:scale-105 transition-all cursor-pointer"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+
+            {/* Sub-text label or instructions */}
+            <div className="absolute bottom-6 font-['DM_Sans'] text-[10px] text-white/30 uppercase tracking-[0.2em] text-center px-4">
+              {language === 'en' ? 'Use Arrow Keys ← / → to Navigate • ESC to Close' : 'Gunakan Tombol Panah ← / → untuk Navigasi • ESC untuk Keluar'}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

@@ -1034,13 +1034,12 @@
   letter-spacing: -0.02em;
 }
 
-/* ── F1 Hero (col 1, row 1+2) ── */
+/* ── F1 Hero (col 1) ── */
 .ed-f1 {
-  grid-row: span 2;
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  min-height: 460px;
+  min-height: 480px;
   border: 1px solid rgba(255,255,255,0.05);
 }
 
@@ -1138,233 +1137,248 @@
 .ed-f1-fill { height:100%; background:linear-gradient(to right, #00A19B, #00D2BE, #27F4D2); border-radius:100px; box-shadow: 0 0 8px rgba(0, 210, 190, 0.45); animation:f1BarFill 1.5s ease-in-out infinite alternate; }
 @keyframes f1BarFill { from{width:78%;} to{width:86%;} }
 
-/* ── MUSIC (col 2, row 1) ── */
-.ed-music {
-  border-radius: 18px;
-  border: 1px solid rgba(176,111,255,0.1);
-  background: linear-gradient(145deg, rgba(176,111,255,0.06), rgba(10,8,18,0.85));
-  padding: 1.4rem;
+/* ── SPOTIFY PLAYLISTS (col 2) ── */
+.ed-spotify {
+  border-radius: 20px;
+  border: 1px solid rgba(176, 111, 255, 0.15);
+  background: linear-gradient(145deg, rgba(176, 111, 255, 0.08), rgba(10, 8, 18, 0.92));
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  justify-content: space-between;
+  gap: 0.85rem;
+  min-height: 480px;
   backdrop-filter: blur(10px);
-}
-
-/* Vinyl record */
-.ed-vinyl-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem 0;
-}
-
-.ed-vinyl {
   position: relative;
-  width: clamp(90px, 10vw, 120px);
-  height: clamp(90px, 10vw, 120px);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 50%,
-      #2a1a3e 0%,
-      #1a1025 25%,
-      #251535 50%,
-      #1a1025 65%,
-      #201530 85%,
-      #1a1025 100%
-    );
-  border: 2px solid rgba(232,200,255,0.12);
-  box-shadow: 0 0 0 1px rgba(232,200,255,0.04), 0 8px 32px rgba(0,0,0,0.5);
-  flex-shrink: 0;
-  transition: box-shadow 0.4s ease;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.ed-vinyl-spin {
-  animation: vinylRotate 2.2s linear infinite;
-  box-shadow: 0 0 0 1px rgba(176,111,255,0.12), 0 0 30px rgba(176,111,255,0.15), 0 8px 32px rgba(0,0,0,0.5);
+.ed-spotify:hover {
+  border-color: rgba(176, 111, 255, 0.38);
+  box-shadow: 0 12px 35px -10px rgba(176, 111, 255, 0.22);
 }
 
-@keyframes vinylRotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-.ed-vinyl-ring {
-  position: absolute;
-  top: 50%; left: 50%;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.04);
-  transform: translate(-50%, -50%);
-}
-.r1 { width: 60%; height: 60%; }
-.r2 { width: 78%; height: 78%; }
-.r3 { width: 92%; height: 92%; }
-
-.ed-vinyl-center {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20%; height: 20%;
-  border-radius: 50%;
-  background: radial-gradient(circle, #e8c8ff 0%, #b06fff 100%);
-  box-shadow: 0 0 12px rgba(176,111,255,0.5);
-}
-
-.ed-vinyl-now {
+.ed-spotify-header {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-family: 'Fira Code', monospace;
-  font-size: 9px;
-  color: rgba(176,111,255,0.75);
-  letter-spacing: 0.12em;
-  animation: nowPlayingPulse 2s ease-in-out infinite;
-}
-.ed-vinyl-disc-icon { flex-shrink: 0; }
-@keyframes nowPlayingPulse { 0%,100%{opacity:0.7;} 50%{opacity:1;} }
-
-.ed-artists {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.ed-artist-chip {
+.ed-spotify-eyebrow {
+  color: #e8c8ff !important;
+  text-shadow: 0 0 10px rgba(176, 111, 255, 0.35);
+  margin-bottom: 0;
+}
+
+.ed-spotify-pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 10px;
-  border-radius: 100px;
-  border: 1px solid rgba(232,200,255,0.12);
-  background: rgba(232,200,255,0.04);
-  color: rgba(255,255,255,0.45);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-.ed-artist-chip:hover { background:rgba(232,200,255,0.1); border-color:rgba(232,200,255,0.28); color:rgba(232,200,255,0.9); }
-.ed-artist-chip.playing {
-  background: rgba(127,255,154,0.1);
-  border-color: rgba(127,255,154,0.35);
-  color: rgba(127,255,154,0.9);
-  box-shadow: 0 0 12px rgba(127,255,154,0.1);
-}
-
-.ed-platforms {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-
-.ed-platform-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 11px;
-  border-radius: 8px;
-  border: 1px solid rgba(232,200,255,0.09);
-  background: rgba(232,200,255,0.03);
-  color: rgba(255,255,255,0.4);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.25s ease;
-}
-.ed-platform-link:hover { background:rgba(232,200,255,0.08); border-color:rgba(232,200,255,0.2); color:rgba(255,255,255,0.8); }
-
-/* ── PERFUME (col 2, row 2) ── */
-.ed-perfume {
-  border-radius: 18px;
-  border: 1px solid rgba(249,184,212,0.1);
-  background: linear-gradient(145deg, rgba(249,184,212,0.05), rgba(10,8,18,0.85));
-  padding: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  backdrop-filter: blur(10px);
-}
-
-.ed-perfume-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
-
-.ed-perfume-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.55rem 0;
-  border-bottom: 1px solid rgba(249,184,212,0.06);
-  transition: background 0.2s ease;
-}
-.ed-perfume-row:last-child { border-bottom: none; }
-.ed-perfume-row:hover { background: rgba(249,184,212,0.03); border-radius: 6px; }
-
-.ed-perfume-idx {
-  font-family: 'Fira Code', monospace;
-  font-size: 9px;
-  color: rgba(249,184,212,0.3);
-  letter-spacing: 0.1em;
-  flex-shrink: 0;
-  width: 20px;
-}
-
-.ed-perfume-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.ed-perfume-brand {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.8);
-  letter-spacing: -0.01em;
-}
-
-.ed-perfume-variant {
   font-family: 'Fira Code', monospace;
   font-size: 8px;
-  color: rgba(249,184,212,0.45);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
+  color: #e8c8ff;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(176, 111, 255, 0.1);
+  border: 1px solid rgba(176, 111, 255, 0.25);
 }
 
-.ed-perfume-dot {
+.ed-spotify-dot-live {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: rgba(249,184,212,0.25);
+  background: #b06fff;
+  box-shadow: 0 0 8px #b06fff;
+  animation: spotifyDotPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes spotifyDotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.ed-spotify-title {
+  margin: 0.1rem 0 0.1rem;
+}
+
+.ed-spotify-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ed-spotify-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.1rem;
+}
+
+.ed-spotify-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(232, 200, 255, 0.03);
+  border: 1px solid rgba(232, 200, 255, 0.07);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.ed-spotify-row:hover {
+  background: rgba(176, 111, 255, 0.1);
+  border-color: rgba(176, 111, 255, 0.32);
+  transform: translateX(4px);
+}
+
+.ed-spotify-idx {
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  color: rgba(232, 200, 255, 0.5);
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+  width: 18px;
+}
+
+.ed-spotify-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ed-spotify-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+.ed-spotify-vibe {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10.5px;
+  color: rgba(232, 200, 255, 0.6);
+}
+
+.ed-spotify-badge {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e8c8ff;
+  background: rgba(176, 111, 255, 0.12);
+  border: 1px solid rgba(176, 111, 255, 0.25);
+  padding: 2px 7px;
+  border-radius: 6px;
   flex-shrink: 0;
 }
 
-/* Scent cloud */
-.ed-scent-cloud {
+/* Equalizer mini wave bars */
+.ed-spotify-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+.ed-wave-bar {
+  width: 2.5px;
+  background: rgba(176, 111, 255, 0.5);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.b1 { height: 40%; animation: waveAnim1 1s ease-in-out infinite alternate; }
+.b2 { height: 85%; animation: waveAnim2 0.8s ease-in-out infinite alternate 0.2s; }
+.b3 { height: 60%; animation: waveAnim3 1.1s ease-in-out infinite alternate 0.4s; }
+
+@keyframes waveAnim1 {
+  0% { height: 25%; background: rgba(176, 111, 255, 0.4); }
+  100% { height: 90%; background: #e8c8ff; }
+}
+@keyframes waveAnim2 {
+  0% { height: 35%; background: rgba(176, 111, 255, 0.4); }
+  100% { height: 100%; background: #b06fff; }
+}
+@keyframes waveAnim3 {
+  0% { height: 20%; background: rgba(176, 111, 255, 0.4); }
+  100% { height: 75%; background: #e8c8ff; }
+}
+
+.ed-spotify-row:hover .ed-wave-bar {
+  background: #e8c8ff;
+  box-shadow: 0 0 6px rgba(176, 111, 255, 0.8);
+}
+
+/* Vibe / Genre tags */
+.ed-spotify-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 0.2rem;
+  gap: 6px;
+  margin-top: 0.1rem;
 }
 
-.ed-scent-tag {
+.ed-spotify-tag {
   font-family: 'Fira Code', monospace;
-  font-size: 8px;
-  letter-spacing: 0.18em;
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(249,184,212,calc(0.28 - var(--si) * 0.04));
-  padding: 3px 8px;
+  color: rgba(232, 200, 255, 0.75);
+  padding: 3px 9px;
   border-radius: 100px;
-  border: 1px solid rgba(249,184,212,calc(0.1 - var(--si) * 0.015));
-  background: rgba(249,184,212,0.03);
+  border: 1px solid rgba(232, 200, 255, 0.12);
+  background: rgba(232, 200, 255, 0.04);
 }
 
-/* ── INSTAGRAM (col 1, row 3 — below F1) ── */
+/* Profile CTA Button */
+.ed-spotify-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(176, 111, 255, 0.1);
+  border: 1px solid rgba(176, 111, 255, 0.25);
+  color: #e8c8ff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 0.2rem;
+  transition: all 0.3s ease;
+}
+
+.ed-spotify-cta:hover {
+  background: linear-gradient(135deg, #b06fff 0%, #8a3ffc 100%);
+  border-color: #b06fff;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 0 25px rgba(176, 111, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.ed-spotify-cta-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── INSTAGRAM (full width below) ── */
 .ed-instagram {
+  grid-column: 1 / -1;
   position: relative;
   border-radius: 18px;
   overflow: hidden;
@@ -2174,7 +2188,7 @@
     font-size: 11.5px;
     margin-bottom: 0.6rem;
   }
-  .ed-music, .ed-perfume {
+  .ed-spotify {
     padding: 1.1rem;
   }
   .ed-vinyl {

@@ -166,7 +166,6 @@ const Uses = () => {
   const [bootDone, setBootDone] = useState(false)
   const [activeChapter, setActiveChapter] = useState(0)
   const [cubeAngle, setCubeAngle] = useState(0)
-  const [activePerfume, setActivePerfume] = useState(0)
   const [hoveredDesk, setHoveredDesk] = useState(null)
   const [activeToolModal, setActiveToolModal] = useState(null)
   const [isTerminalOpen, setIsTerminalOpen] = useState(false)
@@ -244,7 +243,7 @@ const Uses = () => {
   const hardwareItems = [
     { id: 'macbook', name: tm.hardware?.items?.[0]?.name || 'MacBook Air M4', value: tm.hardware?.items?.[0]?.value || 'Starlight Edition', img: 'macbook.jpg', specs: ['Apple M4 10-Core', '16GB Unified', 'Liquid Retina'], pos: 'center', accent: '#8ab4f8', accentRgb: '138,180,248', chip: 'DAILY DRIVER' },
     { id: 'mouse', name: tm.hardware?.items?.[1]?.name || 'Logitech Pebble 2', value: tm.hardware?.items?.[1]?.value || 'White Edition', img: 'mouse.jpg', specs: ['Silent Click', 'Bluetooth LE', 'Minimalist'], pos: 'left', accent: '#e8c8ff', accentRgb: '232,200,255', chip: 'ACTIVE' },
-    { id: 'headphones', name: tm.hardware?.items?.[2]?.name || 'Sony WH-CH520', value: tm.hardware?.items?.[2]?.value || 'Beige Edition', img: 'headphones.jpg', specs: ['50h Battery', 'DSEE Engine', 'Multi-BT'], pos: 'right', accent: '#f9b8d4', accentRgb: '249,184,212', chip: 'ALWAYS ON' }
+    { id: 'headphones', name: tm.hardware?.items?.[2]?.name || 'Headphone', value: tm.hardware?.items?.[2]?.value || 'Airpods Max - Starlight', img: 'headphones.jpg', specs: ['Spatial Audio', 'Active Noise Cancelling', 'Transparency Mode'], pos: 'right', accent: '#f9b8d4', accentRgb: '249,184,212', chip: 'ALWAYS ON' }
   ]
 
   const chapters = [freq.chapters.desk, freq.chapters.craft, freq.chapters.neural, freq.chapters.soul, freq.chapters.outro]
@@ -637,10 +636,10 @@ const Uses = () => {
     const cmd = terminalInput.trim().toLowerCase()
     if (!cmd) return
     let logs = [...terminalLogs, { type: 'user', text: `$ ${terminalInput}` }]
-    if (cmd === 'help') { logs.push({ type: 'output', text: 'COMMANDS: help | stack | f1 | perfume | music | hire | clear' }) }
+    if (cmd === 'help') { logs.push({ type: 'output', text: 'COMMANDS: help | stack | f1 | spotify | music | hire | clear' }) }
     else if (cmd === 'stack') { logs.push({ type: 'output', text: 'React 19 · Vite · GSAP · Three.js · TypeScript · Cursor AI' }) }
     else if (cmd === 'f1') { logs.push({ type: 'output', text: '🏎️ Russell #63 | W15 | 342.8 km/h | DRS: ACTIVE' }) }
-    else if (cmd === 'perfume') { logs.push({ type: 'output', text: '✨ HMNS Untitled Vol 2 · Bellisima Splendore · Lasains Donna' }) }
+    else if (cmd === 'spotify' || cmd === 'playlist') { logs.push({ type: 'output', text: '🎧 Spotify: open.spotify.com/user/1czppyccay4gd2emptj53gu7f (@maylafathinn)' }) }
     else if (cmd === 'music') { toggleAudio(); logs.push({ type: 'output', text: `🎵 ${!isPlayingAudio ? 'PLAYING' : 'PAUSED'} — ${activeArtistTrack}` }) }
     else if (cmd.includes('hire')) { logs.push({ type: 'success', text: '🚀 maylafaat@gmail.com | OPEN FOR FULL-TIME | DAY 1 IMPACT' }) }
     else if (cmd === 'clear') { setTerminalLogs([]); setTerminalInput(''); return }
@@ -657,9 +656,8 @@ const Uses = () => {
   // ── Polaroid data ──
   const polaroids = [
     { type: 'f1', img: tm.life?.f1?.bgImage || 'russell.jpg', label: 'F1 FANATIC', desc: tm.life?.f1?.title || 'George Russell #63', rotate: -6, tx: 0, ty: 0, accent: '#00D2BE' },
-    { type: 'music', icon: '🎵', label: 'MUSIC LOVER', desc: tm.life?.music?.title || 'Current Rotation', rotate: 4, tx: 30, ty: 15, accent: '#e8c8ff', artists: tm.life?.music?.artists },
-    { type: 'perfume', icon: '✨', label: 'NICHE PERFUME', desc: tm.life?.perfume?.title || 'Signature Scents', rotate: -3, tx: -20, ty: 25, accent: '#f9b8d4' },
-    { type: 'social', icon: '📸', label: 'INSTAGRAM', desc: tm.life?.socials?.instagram?.value || '@mamaaamiaw', rotate: 7, tx: 10, ty: -10, accent: '#c96442', link: tm.life?.socials?.instagram?.link },
+    { type: 'spotify', icon: '🎧', label: 'SPOTIFY PLAYLIST', desc: tm.life?.spotify?.title || 'Heavy Rotation', rotate: 3, tx: 25, ty: 15, accent: '#b06fff', link: tm.life?.spotify?.profileUrl || 'https://open.spotify.com/user/1czppyccay4gd2emptj53gu7f?si=8ebf76b377d647f2' },
+    { type: 'social', icon: '📸', label: 'INSTAGRAM', desc: tm.life?.socials?.instagram?.value || '@mamaaamiaw', rotate: -4, tx: -15, ty: 25, accent: '#c96442', link: tm.life?.socials?.instagram?.link },
   ]
   const [activePolaroid, setActivePolaroid] = useState(null)
 
@@ -1075,78 +1073,66 @@ const Uses = () => {
               </div>
             </div>
 
-            {/* ── MUSIC: row 1 col 2 ── */}
-            <div className="ed-music">
-              <div className="ed-block-eyebrow"><Music size={11} /> {tm.life?.music?.label || 'MUSIC LOVER'}</div>
-              <h3 className="ed-block-title">{tm.life?.music?.title || 'Audio & Music Streams'}</h3>
 
-              {/* Big vinyl */}
-              <div className="ed-vinyl-wrap">
-                <div className={`ed-vinyl ${isPlayingAudio ? 'ed-vinyl-spin' : ''}`}>
-                  <div className="ed-vinyl-ring r1" />
-                  <div className="ed-vinyl-ring r2" />
-                  <div className="ed-vinyl-ring r3" />
-                  <div className="ed-vinyl-center" />
+
+            {/* ── SPOTIFY PLAYLIST: row 2 col 2 ── */}
+            <div className="ed-spotify">
+              <div className="ed-spotify-header">
+                <div className="ed-block-eyebrow ed-spotify-eyebrow">
+                  <Music size={11} /> {tm.life?.spotify?.label || 'SPOTIFY PLAYLISTS'}
                 </div>
-                {/* Now playing label */}
-                {isPlayingAudio && (
-                  <div className="ed-vinyl-now">
-                    <Disc size={10} className="ed-vinyl-disc-icon" />
-                    <span>{activeArtistTrack || 'Now Playing'}</span>
-                  </div>
-                )}
+                <div className="ed-spotify-pill">
+                  <span className="ed-spotify-dot-live" />
+                  <span>SPOTIFY</span>
+                </div>
               </div>
+              <h3 className="ed-block-title ed-spotify-title">{tm.life?.spotify?.title || 'Curated Spotify & Rotation'}</h3>
+              <p className="ed-spotify-desc">{tm.life?.spotify?.desc}</p>
 
-              {/* Artist chips */}
-              <div className="ed-artists">
-                {tm.life?.music?.artists?.map(a => (
-                  <button key={a} type="button"
-                    className={`ed-artist-chip ${activeArtist === a && isPlayingAudio ? 'playing' : ''}`}
-                    onClick={() => { if (activeArtist === a && isPlayingAudio) toggleAudio(); else playArtist(a) }}>
-                    {activeArtist === a && isPlayingAudio ? <Volume2 size={10} /> : <Music size={10} />}
-                    {a}
-                  </button>
-                ))}
-              </div>
-
-              {/* Platform links */}
-              <div className="ed-platforms">
-                {tm.life?.music?.platforms?.map(p => (
-                  <a key={p.name} href={p.link} target="_blank" rel="noopener noreferrer" className="ed-platform-link">
-                    {p.name === 'Spotify' ? <Music size={11} /> : <Radio size={11} />}
-                    {p.name}
-                    <ExternalLink size={9} />
+              <div className="ed-spotify-list">
+                {(tm.life?.spotify?.playlists || []).map((pl, i) => (
+                  <a
+                    key={pl.name}
+                    href={pl.link || tm.life?.spotify?.profileUrl || 'https://open.spotify.com/user/1czppyccay4gd2emptj53gu7f?si=8ebf76b377d647f2'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ed-spotify-row"
+                  >
+                    <span className="ed-spotify-idx">0{i + 1}</span>
+                    <div className="ed-spotify-info">
+                      <span className="ed-spotify-name">{pl.name}</span>
+                      <span className="ed-spotify-vibe">{pl.desc}</span>
+                    </div>
+                    {pl.badge && <span className="ed-spotify-badge">{pl.badge}</span>}
+                    <div className="ed-spotify-wave" aria-hidden="true">
+                      <span className="ed-wave-bar b1" />
+                      <span className="ed-wave-bar b2" />
+                      <span className="ed-wave-bar b3" />
+                    </div>
                   </a>
                 ))}
               </div>
-            </div>
 
-            {/* ── PERFUME: row 2 col 2 ── */}
-            <div className="ed-perfume">
-              <div className="ed-block-eyebrow"><Sparkles size={11} /> {tm.life?.perfume?.label || 'NICHE PERFUME'}</div>
-              <h3 className="ed-block-title">{tm.life?.perfume?.title || 'Signature Scents'}</h3>
-              <div className="ed-perfume-list">
-                {(tm.life?.perfume?.items || [
-                  { brand: 'HMNS', variant: 'Untitled Vol. 2' },
-                  { brand: 'Bellisima', variant: 'Splendore' },
-                  { brand: 'Lasains', variant: 'Donna' }
-                ]).map((item, i) => (
-                  <div key={item.brand} className="ed-perfume-row">
-                    <span className="ed-perfume-idx">0{i + 1}</span>
-                    <div className="ed-perfume-info">
-                      <span className="ed-perfume-brand">{item.brand}</span>
-                      <span className="ed-perfume-variant">{item.variant}</span>
-                    </div>
-                    <div className="ed-perfume-dot" />
-                  </div>
+              {/* Vibe / Genre tags */}
+              <div className="ed-spotify-tags" aria-hidden="true">
+                {(tm.life?.spotify?.tags || ['Old Money', 'Hard Hits', 'K-Pop Gym', 'Confidence Pop', 'Midnight Rotation']).map((n, i) => (
+                  <span key={n} className="ed-spotify-tag" style={{ '--ti': i }}>{n}</span>
                 ))}
               </div>
-              {/* Scent cloud visual */}
-              <div className="ed-scent-cloud" aria-hidden="true">
-                {['woody', 'floral', 'musk', 'amber', 'vanilla'].map((n, i) => (
-                  <span key={n} className="ed-scent-tag" style={{ '--si': i }}>{n}</span>
-                ))}
-              </div>
+
+              {/* Profile button */}
+              <a
+                href={tm.life?.spotify?.profileUrl || 'https://open.spotify.com/user/1czppyccay4gd2emptj53gu7f?si=8ebf76b377d647f2'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ed-spotify-cta"
+              >
+                <div className="ed-spotify-cta-text">
+                  <Music size={13} />
+                  <span>{tm.life?.spotify?.btnText || 'Open Spotify Profile (@maylafathinn)'}</span>
+                </div>
+                <ExternalLink size={12} />
+              </a>
             </div>
 
             {/* ── INSTAGRAM: row 2 col 1 (bottom) ── */}

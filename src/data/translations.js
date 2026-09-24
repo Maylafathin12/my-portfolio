@@ -85,7 +85,7 @@ export const translations = {
             label: "Off-Circuit",
             title: "What fuels",
             titleEm: "the engineer.",
-            story: "F1 telemetry on Sunday. Niche perfume before standup. Lana Del Rey while refactoring. The human behind the commits."
+            story: "F1 telemetry on Sunday. Curated Spotify playlists before standup. Lana Del Rey while refactoring. The human behind the commits."
           },
           outro: {
             num: "05",
@@ -103,7 +103,7 @@ export const translations = {
         items: [
           { name: "Laptop", value: "Macbook Air M4 (Starlight)" },
           { name: "Mouse", value: "Logitech Pebble 2 M350s (White)" },
-          { name: "Headphone", value: "Sony WH-CH520 (Beige)" }
+          { name: "Headphone", value: "Airpods Max - Starlight" }
         ]
       },
       craftTabs: {
@@ -144,20 +144,52 @@ export const translations = {
           title: "Audio & Music Streams",
           desc: "Daily playlists and streaming rotation on Spotify & MYRADIO",
           platforms: [
-            { name: "Spotify", link: "https://open.spotify.com/playlist/37eVMnGXgPw9K88EmuBjV0?si=UftT4SNSRpSJUy3wMqP8QQ", desc: "Daily Playlists & Tunes 🎵" },
+            { name: "Spotify", link: "https://open.spotify.com/user/1czppyccay4gd2emptj53gu7f?si=96764f93bf9845f1", desc: "Daily Playlists & Tunes 🎵" },
             { name: "MYRADIO", link: "https://myradio-by-mypitlane.vercel.app/", desc: "MYRADIO by MyPitlane 📻" }
           ],
           artistsLabel: "Addicted Artists & Heavy Rotation",
           artists: ["SADE", "ENYA", "Lana Del Rey"]
         },
-        perfume: {
-          title: "Perfume Addiction",
-          desc: "Obsessed with signature scents & local/niche fragrance brands ✨",
-          items: [
-            { brand: "HMNS", variant: "UNTITLED VOL 2", bgImage: "untitled.jpg" },
-            { brand: "BELLISIMA BORSA", variant: "SPLENDORE", bgImage: "splendore.jpeg" },
-            { brand: "LASAINS", variant: "DONNA COSTOSA", bgImage: "donna.jpeg" }
-          ]
+        spotify: {
+          label: "SPOTIFY PLAYLISTS",
+          title: "Curated Spotify & Rotation",
+          desc: "Personal playlists on heavy rotation — from timeless jazz to late night deep focus 🎧",
+          profileUrl: "https://open.spotify.com/user/1czppyccay4gd2emptj53gu7f?si=8ebf76b377d647f2",
+          username: "maylafathinn",
+          btnText: "Open Spotify Profile (@maylafathinn)",
+          playlists: [
+            {
+              name: "⚜️ old money songs ⚜️",
+              desc: "Classics, Jazz & Timeless Melodies",
+              badge: "Old Money",
+              link: "https://open.spotify.com/playlist/37eVMnGXgPw9K88EmuBjV0?si=C7MVV92_QRKV1sE9Kpos9w"
+            },
+            {
+              name: "songs hitting hard fr fr 🖤",
+              desc: "Deep Bass, Heavy Energy & Fr Vibes",
+              badge: "Hits Hard",
+              link: "https://open.spotify.com/playlist/6blKyarU1nOhUDXVgVNWJn?si=ABeqTFqvTqKvy1YWm_R_Ug"
+            },
+            {
+              name: "ᓚ₍⑅^..^₎♡ eom seonghyeon, in songs ⭐️",
+              desc: "Sweet Melodies & Soft Vocals",
+              badge: "Ethereal",
+              link: "https://open.spotify.com/playlist/3KrDNs4goua4MMXPnjGyz8?si=XjqMnAxTRl69pvsr5_Kotg"
+            },
+            {
+              name: "gym/wo (korean song's)",
+              desc: "High BPM K-Pop & Workout Power",
+              badge: "Gym / WO",
+              link: "https://open.spotify.com/playlist/4t1obxAd6qBl0heVpbBftx?si=5ivQF-sCQ_uyL4tpnIkL3w"
+            },
+            {
+              name: "hot girl mentality 👜🕶️",
+              desc: "Confidence Boost & Pop Anthems",
+              badge: "Main Character",
+              link: "https://open.spotify.com/playlist/7eFjIG0UfmA1vTAz9iHNd7?si=AbfQqu3bS_KyzyOjdZ_20w"
+            }
+          ],
+          tags: ["Old Money", "Hard Hits", "K-Pop Gym", "Confidence Pop", "Midnight Rotation"]
         },
         socials: {
           instagram: { name: "Instagram", value: "@mamaaamiaw", link: "https://instagram.com/mamaaamiaw" },
@@ -204,8 +236,10 @@ export const translations = {
           glow: '#f9b8d4',
           ring: false,
           bullets: [
-            'Launched the Dicoding DevCommunity Support program to scale tech communities nationwide.',
-            'Architected the collaboration framework and successfully managed a growing network of over 200 active members.'
+            'Launched the Dicoding DevCommunity Support program and designed the collaboration framework behind it, growing a nationwide network of 200+ active members.',
+            'Personally sourced participants for Dicoding\'s own AWS x Dicoding ILT sessions (target: 2,200) via email/WhatsApp blasts and events, set up Zoom sessions with H-1 reminders, and recapped attendance in detail — hit the target within 3 months.',
+            'Separately, coordinated weekly recap cycles with partner education providers (Hacktiv8, Generation Girl, and others) running their own AWS-sponsored sessions with independent targets.',
+            'Managed sponsorship, partnership, and external speaker requests from universities and schools.'
           ],
         },
         {
@@ -316,6 +350,8 @@ export const translations = {
         { id: 'a3', name: '1st Place National — PKP2 PTMA (SEHAT Website)', org: 'PKM Karsa Cipta', year: '2023', x: 68, y: 11 },
         { id: 'a4', name: 'Most Favorited Web Champion — YUMMY', org: 'Web Competition', year: '2023', x: 82, y: 18 },
         { id: 'a5', name: 'Bangkit Academy Graduate', org: 'Google, GoTo & Traveloka', year: '2024', x: 45, y: 8 },
+        { id: 'a6', name: 'Funded Grant & 1st Place, PKP2 Selection', org: 'Program Kreativitas Mahasiswa (PKM), SEHAT+ App', year: '2023', x: 35, y: 22 },
+        { id: 'a7', name: 'Funded National Grant — P2MW', org: 'Program Mahasiswa Wirausaha, SAHAL EdTech', year: '2024', x: 58, y: 24 },
       ]
     },
     education: {
@@ -455,7 +491,7 @@ export const translations = {
             label: "Off-Circuit",
             title: "Yang mengisi",
             titleEm: "bahan bakar engineer.",
-            story: "Telemetri F1 di Minggu. Parfum niche sebelum standup. Lana Del Rey sambil refactor. Manusia di balik setiap commit."
+            story: "Telemetri F1 di Minggu. Playlist Spotify sebelum standup. Lana Del Rey sambil refactor. Manusia di balik setiap commit."
           },
           outro: {
             num: "05",
@@ -473,7 +509,7 @@ export const translations = {
         items: [
           { name: "Laptop", value: "Macbook Air M4 (Starlight)" },
           { name: "Mouse", value: "Logitech Pebble 2 M350s (White)" },
-          { name: "Headphone", value: "Sony WH-CH520 (Beige)" }
+          { name: "Headphone", value: "Airpods Max - Starlight" }
         ]
       },
       software: {
@@ -505,20 +541,52 @@ export const translations = {
           title: "Streaming Musik & Radio",
           desc: "Selalu dengerin lagu-lagu hits dan playlist favorit di Spotify & MYRADIO",
           platforms: [
-            { name: "Spotify", link: "https://open.spotify.com/playlist/37eVMnGXgPw9K88EmuBjV0?si=UftT4SNSRpSJUy3wMqP8QQ", desc: "Playlist Harian 🎵" },
+            { name: "Spotify", link: "https://open.spotify.com/user/1czppyccay4gd2emptj53gu7f?si=96764f93bf9845f1", desc: "Playlist Harian 🎵" },
             { name: "MYRADIO", link: "https://myradio-by-mypitlane.vercel.app/", desc: "MYRADIO by MyPitlane 📻" }
           ],
           artistsLabel: "Addicted Song & Artis Favorit",
           artists: ["SADE", "ENYA", "Lana Del Rey"]
         },
-        perfume: {
-          title: "Kecanduan Parfume",
-          desc: "Lagi addicted banget sama racikan aroma dari brand wewangian ini ✨",
-          items: [
-            { brand: "HMNS", variant: "UNTITLED VOL 2", bgImage: "untitled.jpg" },
-            { brand: "BELLISIMA BORSA", variant: "SPLENDORE", bgImage: "splendore.jpeg" },
-            { brand: "LASAINS", variant: "DONNA COSTOSA", bgImage: "donna.jpeg" }
-          ]
+        spotify: {
+          label: "PLAYLIST SPOTIFY",
+          title: "Koleksi Playlist Spotify",
+          desc: "Kurasi playlist andalan di Spotify — dari vintage jazz, mood booster, sampai gym power 🎧",
+          profileUrl: "https://open.spotify.com/user/1czppyccay4gd2emptj53gu7f?si=8ebf76b377d647f2",
+          username: "maylafathinn",
+          btnText: "Buka Profil Spotify (@maylafathinn)",
+          playlists: [
+            {
+              name: "⚜️ old money songs ⚜️",
+              desc: "Klasik, Jazz & Melodi Timeless",
+              badge: "Old Money",
+              link: "https://open.spotify.com/playlist/37eVMnGXgPw9K88EmuBjV0?si=C7MVV92_QRKV1sE9Kpos9w"
+            },
+            {
+              name: "songs hitting hard fr fr 🖤",
+              desc: "Deep Bass, Heavy Energy & Fr Vibes",
+              badge: "Hits Hard",
+              link: "https://open.spotify.com/playlist/6blKyarU1nOhUDXVgVNWJn?si=ABeqTFqvTqKvy1YWm_R_Ug"
+            },
+            {
+              name: "ᓚ₍⑅^..^₎♡ eom seonghyeon, in songs ⭐️",
+              desc: "Lagu Manis, Vokal Lembut & Dreamy",
+              badge: "Ethereal",
+              link: "https://open.spotify.com/playlist/3KrDNs4goua4MMXPnjGyz8?si=XjqMnAxTRl69pvsr5_Kotg"
+            },
+            {
+              name: "gym/wo (korean song's)",
+              desc: "K-Pop High BPM & Semangat Workout",
+              badge: "Gym / WO",
+              link: "https://open.spotify.com/playlist/4t1obxAd6qBl0heVpbBftx?si=5ivQF-sCQ_uyL4tpnIkL3w"
+            },
+            {
+              name: "hot girl mentality 👜🕶️",
+              desc: "Lagu Pede & Mood Booster Maksimal",
+              badge: "Main Character",
+              link: "https://open.spotify.com/playlist/7eFjIG0UfmA1vTAz9iHNd7?si=AbfQqu3bS_KyzyOjdZ_20w"
+            }
+          ],
+          tags: ["Old Money", "Hard Hits", "K-Pop Gym", "Confidence Pop", "Midnight Rotation"]
         },
         socials: {
           instagram: { name: "Instagram", value: "@mamaaamiaw", link: "https://instagram.com/mamaaamiaw" },
@@ -565,8 +633,10 @@ export const translations = {
           glow: '#f9b8d4',
           ring: false,
           bullets: [
-            'Meluncurkan program Dicoding DevCommunity Support untuk memperluas jangkauan komunitas teknologi di seluruh Nusantara.',
-            'Merancang kerangka kerja kolaborasi dan berhasil mengelola jaringan yang bertumbuh hingga lebih dari 200 anggota aktif.'
+            'Meluncurkan program Dicoding DevCommunity Support dan merancang kerangka kolaborasinya, membangun jaringan nasional dengan 200+ anggota aktif.',
+            'Secara mandiri mencarikan peserta untuk sesi ILT AWS x Dicoding milik Dicoding sendiri (target: 2.200) melalui blast email/WhatsApp dan event, menyiapkan sesi Zoom dengan pengingat H-1, dan merekap kehadiran secara detail — mencapai target dalam 3 bulan.',
+            'Secara terpisah, mengoordinasikan siklus rekap mingguan dengan mitra penyedia edukasi (Hacktiv8, Generation Girl, dll.) yang menjalankan sesi bersponsori AWS dengan target masing-masing.',
+            'Mengelola permintaan sponsorship, partnership, dan narasumber eksternal dari universitas dan sekolah.'
           ],
         },
         {
@@ -677,6 +747,8 @@ export const translations = {
         { id: 'a3', name: 'Juara 1 Nasional — PKP2 PTMA (Website SEHAT)', org: 'PKM Karsa Cipta', year: '2023', x: 68, y: 11 },
         { id: 'a4', name: 'Juara Most Favorited Web — YUMMY', org: 'Kompetisi Web', year: '2023', x: 82, y: 18 },
         { id: 'a5', name: 'Lulusan Bangkit Academy', org: 'Google, GoTo & Traveloka', year: '2024', x: 45, y: 8 },
+        { id: 'a6', name: 'Hibah Didanai & Juara 1 Seleksi PKP2', org: 'Program Kreativitas Mahasiswa (PKM), Aplikasi SEHAT+', year: '2023', x: 35, y: 22 },
+        { id: 'a7', name: 'Hibah Nasional Didanai — P2MW', org: 'Program Mahasiswa Wirausaha, SAHAL EdTech', year: '2024', x: 58, y: 24 },
       ]
     },
     education: {
